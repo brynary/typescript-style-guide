@@ -13,7 +13,15 @@ Use these instructions when turning the outline into guideline pages.
 
 ## Drafting Order
 
-Not yet defined. Once [OUTLINE.md](OUTLINE.md) has a guideline map, list its sections here in drafting order, foundations first.
+1. Resolve the flagship decision rows (asterisked IDs in [DECISIONS.md](DECISIONS.md)) with the project owner; they gate multiple pages. Record the resulting posture in the AGENTS.md `Style Guide Bias` section.
+2. Section 1 (Foundations and Toolchain), starting with the tsconfig and Biome pages; they are the source of truth every later page defers to for mechanics.
+3. Section 3 (Type Modeling) - contains most flagship pages (interface vs type, enums, any/unknown, assertions, absence model).
+4. Section 2 (Modules, Imports, and Exports).
+5. Section 5 (Errors, Async, and Data) - error model and validation are flagship.
+6. Section 4 (Functions, Classes, and API Design).
+7. Section 6 (Testing) and Section 7 (Documentation).
+8. Workflow pages, once the guideline pages they reference exist.
+9. Conditional overlays (React, CLI, monorepo, publishing) only after SCOPE-3 is resolved.
 
 ## Page Rules
 
