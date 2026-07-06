@@ -4,7 +4,7 @@
 
 This repository is a TypeScript style guide packaged as a skill for AI coding agents. The guide should help agents write idiomatic TypeScript using the project owner's conventions.
 
-The repository is currently an infrastructure skeleton: the decision register, outline, and policy pages have not been written yet.
+The guide is drafted: the decision register is resolved and all guideline, overlay, and workflow pages exist. Ongoing work is maintenance - amend [DECISIONS.md](DECISIONS.md) first, then the owning page.
 
 Keep the work simple, explicit, and useful for agents. Do not turn the guide into a TypeScript textbook.
 
@@ -35,7 +35,18 @@ Keep the work simple, explicit, and useful for agents. Do not turn the guide int
 
 ## Style Guide Bias
 
-Not yet decided. Record the overall posture here (a short bullet list of the guide's opinionated defaults) once the decision register in [DECISIONS.md](DECISIONS.md) is resolved.
+The decision register in [DECISIONS.md](DECISIONS.md) is fully resolved (2026-07-06). The guide's posture:
+
+- Hard rules for mechanical choices; reasoned defaults for judgment calls.
+- Maximum strictness: `strict` plus every add-on flag (including `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`); `erasableSyntaxOnly` on, so no enums, namespaces, or constructor parameter properties.
+- Bun-first (runtime, package manager, test runner); Biome with default formatter settings; `tsc --noEmit` as the type-check gate.
+- ESM only; named exports only; barrel files banned; relative imports locally and `#` subpath imports across areas, always with `.ts` extensions.
+- `interface` for object shapes, `type` otherwise; `undefined`-first absence model; `readonly` by default; no `any`, `as`, or `!` in production code (`as const` allowed; prefer `satisfies`).
+- Errors: neverthrow `Result` for expected failures, `throw` only for bugs; Zod validation at boundaries; Temporal over `Date` in new code.
+- `function` declarations top-level with arrows for callbacks; explicit return types on exported functions; function-first, classes only for stateful abstractions.
+- Tests: bun:test with `test` + `describe`, colocated `*.test.ts`, minimal mocks (real implementations or nullables; mock only process boundaries).
+- Layer folders (`routes/`, `services/`, `models/`); kebab-case file names.
+- Overlays in scope: React/TSX (Tailwind for styling; state and data fetching per-project), CLI scripts, monorepo/workspaces. Package publishing is out of scope.
 
 ## Editing Expectations
 
