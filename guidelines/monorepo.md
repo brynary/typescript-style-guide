@@ -12,7 +12,7 @@ Link internal packages with the `workspace:*` protocol, share dependency version
 
 ## Why
 
-`workspace:*` and catalogs keep every package on one resolved version without caret drift. Per-package tsconfig and Biome files let a package declare exactly its own `types` and rules while inheriting the baseline. `tsconfig` `paths` are ignored at runtime and are a known Bun monorepo gotcha, so they are banned.
+`workspace:*` and catalogs keep every package on one resolved version without caret drift. Per-package tsconfig and Biome files let a package declare exactly its own `types` and rules while inheriting the baseline.
 
 ## Do
 
@@ -24,7 +24,7 @@ Link internal packages with the `workspace:*` protocol, share dependency version
 
 ## Avoid
 
-- `tsconfig` `paths` aliases for internal linking (runtime-ignored under Bun).
+- `tsconfig` `paths` aliases for internal linking; the ban is owned by [import-paths.md](import-paths.md).
 - Caret ranges for a dependency shared by several packages; catalog it instead.
 - A single root tsconfig `types` array that leaks globals into every package.
 
@@ -51,7 +51,7 @@ Link internal packages with the `workspace:*` protocol, share dependency version
 ```jsonc
 // packages/api/tsconfig.json
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": { "types": ["bun"] }
 }
 ```

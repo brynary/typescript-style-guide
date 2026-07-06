@@ -46,7 +46,7 @@ Guideline pages are policy. Do not load every guideline page by default. Overlay
 ## Errors, Async, and Data
 
 - [Error handling](guidelines/error-handling.md) - any fallible operation; neverthrow Result for expected failures, throw for bugs.
-- [Runtime validation](guidelines/runtime-validation.md) - ingesting external data (API, env, forms); Zod at the boundary.
+- [Runtime validation](guidelines/runtime-validation.md) - ingesting external data (API, env, config files, forms); Zod at the boundary.
 - [Async patterns](guidelines/async-patterns.md) - writing async code; await discipline, concurrency, AbortSignal.
 - [Resource management](guidelines/resource-management.md) - opening files, connections, or locks; `using` / `await using`.
 - [Dates and modern stdlib](guidelines/dates-and-stdlib.md) - date/time work or utility helpers; Temporal and native stdlib first.

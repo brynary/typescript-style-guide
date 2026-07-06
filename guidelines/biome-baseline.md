@@ -12,7 +12,7 @@ Biome owns everything a tool can decide so prose does not have to: formatting an
 
 - Copy the canonical `biome.json` below and keep `recommended: true`.
 - Accept the formatter defaults unchanged: tabs, double quotes, line width 80.
-- Enable the opinionated rules that back register decisions: `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention` (kebab-case), `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions` (interface), `useConsistentArrayType` (shorthand `T[]`).
+- Enable the opinionated rules that back register decisions: `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention` (kebab-case), `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions` (interface), `useConsistentArrayType` (shorthand `T[]`), `noImportCycles`.
 - Run Biome in the same pre-commit and CI gates as the type check.
 
 ## Avoid
@@ -26,7 +26,7 @@ Biome owns everything a tool can decide so prose does not have to: formatting an
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.4/schema.json",
   "formatter": {
     // Defaults left unset on purpose: tabs, lineWidth 80
     "enabled": true
@@ -56,6 +56,9 @@ Biome owns everything a tool can decide so prose does not have to: formatting an
       "performance": {
         "noBarrelFile": "error",
         "noReExportAll": "error"
+      },
+      "suspicious": {
+        "noImportCycles": "error"
       }
     }
   }

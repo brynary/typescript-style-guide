@@ -41,7 +41,7 @@ exact = true
 ```jsonc
 {
   "dependencies": {
-    "zod": "3.24.1", // exact pin
+    "zod": "4.0.5", // exact pin
     "@app/core": "catalog:" // shared version from the workspace catalog
   },
   "trustedDependencies": ["some-native-addon"]

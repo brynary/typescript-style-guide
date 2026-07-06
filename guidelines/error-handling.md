@@ -10,7 +10,7 @@ Expected failures (validation, I/O, domain rules) belong in the type signature s
 
 ## Do
 
-- Model the `E` side as a discriminated error union (`type` field) or a typed error class.
+- Model the `E` side as a discriminated error union (`type` field; see [discriminated-unions.md](discriminated-unions.md)) or a typed error class.
 - Build values with `ok` / `err`; compose with `andThen`, `map`, and `mapErr`.
 - Wrap throwing or async APIs at the boundary with `ResultAsync.fromPromise` or `fromThrowable`.
 - Narrow with `catch (error: unknown)` and `instanceof` before touching the value.

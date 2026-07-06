@@ -45,4 +45,4 @@ export function payAndReceipt(cents: number): string {
 
 ## Exceptions
 
-None. Import-cycle detection is enforced automatically; see [biome-baseline.md](biome-baseline.md). For package-boundary layout in a workspace, see [monorepo.md](monorepo.md).
+None. Import cycles are caught mechanically by Biome `noImportCycles`; see [biome-baseline.md](biome-baseline.md). For package-boundary layout in a workspace, see [monorepo.md](monorepo.md).

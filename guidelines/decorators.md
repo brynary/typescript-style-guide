@@ -6,7 +6,7 @@ Do not use decorators.
 
 ## Why
 
-Decorators are non-erasable runtime syntax that the type-stripping baseline rules out, and they hide behavior behind an annotation. Plain functions and explicit wiring are clearer and greppable.
+Decorators are non-erasable runtime syntax that the type-stripping baseline in [tsconfig-baseline.md](tsconfig-baseline.md) rules out, and they hide behavior behind an annotation. Plain functions and explicit wiring are clearer and greppable.
 
 ## Do
 
@@ -35,7 +35,10 @@ function withLogging(handler: Handler): Handler {
   };
 }
 
-const handleHealth: Handler = () => new Response("ok");
+function handleHealth(): Response {
+  return new Response("ok");
+}
+
 const loggedHealth = withLogging(handleHealth);
 ```
 

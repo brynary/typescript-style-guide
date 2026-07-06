@@ -52,4 +52,4 @@ export function matches(text: string, term: string): boolean {
 
 ## Exceptions
 
-`Date` is allowed at a library or API boundary that requires it; convert to `Temporal` on the near side. For `Promise.try` and other async built-ins, see [async-patterns.md](async-patterns.md).
+`Date` is allowed at a library or API boundary that requires it; convert to `Temporal` on the near side. For `Promise.try` and other async built-ins, see [async-patterns.md](async-patterns.md). If the project's TypeScript `lib` does not yet type `Map.getOrInsert`, use the explicit `get`-check-`set` idiom instead of adding ambient declarations.

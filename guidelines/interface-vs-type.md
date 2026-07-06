@@ -35,12 +35,12 @@ type Id = string;
 type Shape = Circle | Square;
 
 interface Circle {
-  readonly kind: "circle";
+  readonly type: "circle";
   readonly radius: number;
 }
 
 interface Square {
-  readonly kind: "square";
+  readonly type: "square";
   readonly side: number;
 }
 ```

@@ -2,7 +2,7 @@
 
 This repository contains a TypeScript style guide packaged as a skill for AI coding agents. The goal is to give agents concrete, opinionated defaults for writing idiomatic TypeScript in the project owner's preferred style.
 
-The repository is currently an infrastructure skeleton: the research, decision register, outline, and policy pages have not been written yet.
+The guide is fully drafted: the decision register in [DECISIONS.md](DECISIONS.md) is resolved and every guideline, overlay, and workflow page exists. Ongoing changes follow the maintenance workflow below.
 
 The packaged skill shape is `SKILL.md` as the root router, focused policy pages under `guidelines/`, and procedure pages under `workflows/`. Planning files remain in the repo as source material, but ordinary skill use should load only the router and relevant guidelines or workflows.
 
@@ -24,7 +24,7 @@ Source research reports go in [.ai/research/](.ai/research). They are used to sy
 
 ## Intended Style
 
-Not yet decided. Summarize the guide's overall posture here (a short bullet list) once the decision register in [DECISIONS.md](DECISIONS.md) is resolved.
+Hard rules for mechanical choices, reasoned defaults for judgment calls. The stack is Bun-first with maximum-strictness TypeScript 6 (written TS 7-forward), Biome with default formatting, ESM with named exports and no barrels, `interface` for object shapes, an undefined-first absence model, no `any`/`as`/`!`, neverthrow Results for expected failures, Zod at boundaries, and minimal-mock bun:test testing. The full posture lives in the `Style Guide Bias` section of [AGENTS.md](AGENTS.md).
 
 ## Workflow
 

@@ -35,6 +35,9 @@ TypeScript 6 is strict by default but leaves the sharper add-ons off; turning th
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
 
+    // TS 6 default, kept explicit (policy: side-effect-imports.md)
+    "noUncheckedSideEffectImports": true,
+
     // Bun runs TS directly; type-check only
     "noEmit": true,
     "isolatedModules": true,
