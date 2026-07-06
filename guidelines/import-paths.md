@@ -12,6 +12,7 @@ Relative paths are portable and need no resolver config; `#` subpath imports giv
 
 - Use relative imports (`./`, `../`) within the same area, always ending in `.ts` (or `.tsx`).
 - Declare cross-area entry points as `#`-prefixed subpaths in `package.json` `imports` and import them by that name.
+- Write wildcard mapping targets without an extension (`"#services/*": "./src/services/*"`); the wildcard captures the `.ts` extension from the import specifier, so a `*.ts` target would resolve to `user.ts.ts`.
 - Load JSON and other assets with an import attribute: `with { type: "json" }`.
 
 ## Avoid
@@ -26,7 +27,8 @@ Relative paths are portable and need no resolver config; `#` subpath imports giv
 // package.json
 {
   "imports": {
-    "#services/*": "./src/services/*.ts"
+    // No extension on the target: the specifier's ".ts" fills the wildcard.
+    "#services/*": "./src/services/*"
   }
 }
 ```

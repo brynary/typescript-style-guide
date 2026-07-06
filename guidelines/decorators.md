@@ -23,9 +23,7 @@ Decorators are non-erasable runtime syntax that the type-stripping baseline in [
 ## Example
 
 ```ts
-interface Handler {
-  (request: Request): Response;
-}
+type Handler = (request: Request) => Response;
 
 function withLogging(handler: Handler): Handler {
   return (request) => {

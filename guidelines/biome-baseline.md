@@ -2,7 +2,7 @@
 
 ## Rule
 
-Use Biome 2.x as the only formatter and linter with one canonical `biome.json`: accept every formatter default and enable the opinionated rules that mechanically enforce this guide's decisions.
+Use Biome 2.2 or newer as the only formatter and linter with one canonical `biome.json`: accept every formatter default and enable the opinionated rules that mechanically enforce this guide's decisions.
 
 ## Why
 
@@ -11,6 +11,7 @@ Biome owns everything a tool can decide so prose does not have to: formatting an
 ## Do
 
 - Copy the canonical `biome.json` below and keep `recommended: true`.
+- Install Biome 2.2 or newer and keep the `$schema` version in sync with the installed version; before 2.2, `useConsistentTypeDefinitions` and `noImportCycles` were nursery rules and this config fails to load.
 - Accept the formatter defaults unchanged: tabs, double quotes, line width 80.
 - Enable the opinionated rules that back register decisions: `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention` (kebab-case), `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions` (interface), `useConsistentArrayType` (shorthand `T[]`), `noImportCycles`.
 - Run Biome in the same pre-commit and CI gates as the type check.
@@ -26,7 +27,7 @@ Biome owns everything a tool can decide so prose does not have to: formatting an
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
   "formatter": {
     // Defaults left unset on purpose: tabs, lineWidth 80
     "enabled": true

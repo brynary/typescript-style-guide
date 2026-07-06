@@ -24,11 +24,11 @@ A suppression removes a guardrail, so the reason must be visible at the point of
 ## Example
 
 ```ts
-import { legacyClient } from "./vendor/legacy-client.ts";
+// Interop boundary: the vendor package ships no type declarations.
+// @ts-expect-error legacy-sdk is an untyped JavaScript package
+import { legacyClient } from "legacy-sdk";
 
-// Interop boundary: the vendor module ships no types.
 export function fetchRawRecord(id: string): Promise<unknown> {
-	// @ts-expect-error vendor/legacy-client.ts has no type declarations
 	return legacyClient.get(id);
 }
 ```

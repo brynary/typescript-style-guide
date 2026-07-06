@@ -12,6 +12,7 @@ A `using` declaration disposes the resource when the scope exits, on every path 
 
 - Give a resource type a `[Symbol.dispose]()` (sync) or `[Symbol.asyncDispose]()` (async) method and implement `Disposable` / `AsyncDisposable`.
 - Acquire with `using resource = ...` for sync cleanup, `await using resource = ...` for async cleanup.
+- Prefix a disposal-only binding with an underscore (`using _timer = ...`); `noUnusedLocals` exempts underscore-prefixed names, and the binding exists only for its scope-exit effect.
 - Keep the disposal logic in the resource, not at each call site.
 
 ## Avoid
@@ -40,7 +41,7 @@ export function createTimer(label: string): Disposable {
 }
 
 export async function runQuery(pool: Pool, sql: string): Promise<void> {
-  using timer = createTimer(sql);
+  using _timer = createTimer(sql);
   await using connection = await pool.acquire();
   await connection.query(sql);
 }

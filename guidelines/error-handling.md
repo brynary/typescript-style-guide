@@ -26,7 +26,8 @@ Expected failures (validation, I/O, domain rules) belong in the type signature s
 ## Example
 
 ```ts
-import { ok, err, Result, ResultAsync } from "neverthrow";
+import type { Result } from "neverthrow";
+import { err, ok, ResultAsync } from "neverthrow";
 
 interface Account {
   readonly id: string;

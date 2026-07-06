@@ -13,7 +13,7 @@ Use `Record<K, V>` for a fixed or finite set of known keys, an index signature f
 - Use `Record<Currency, number>` when the key set is a known union.
 - Use `Map<string, Session>` for caches, registries, and dynamic key sets.
 - Narrow an indexed read before using it, since its type includes `undefined`.
-- Use `Map.getOrInsert` or a guarded `get` instead of read-then-assign.
+- Use a guarded `get` before writing (`Map.getOrInsert` once the default TS lib types it; see [dates-and-stdlib](dates-and-stdlib.md)).
 
 ## Avoid
 

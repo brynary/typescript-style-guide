@@ -11,7 +11,7 @@ Real code under test catches real bugs; mocks encode assumptions that drift from
 ## Do
 
 - Call the real collaborator when it is pure or cheap; inject a plain fake object that implements the same interface when it is not.
-- Use `spyOn(obj, "method")` to observe or stub a boundary call on an existing object.
+- Use `spyOn(obj, "method")` for a boundary call on an existing object, and give it a stub (`mockResolvedValue`, `mockImplementation`) so the real boundary is never hit.
 - Use `mock(fn)` to build a standalone stub passed in as a dependency.
 - Restore state in `afterEach` with `mock.restore()` so no double survives the test.
 
@@ -19,12 +19,13 @@ Real code under test catches real bugs; mocks encode assumptions that drift from
 
 - Mocking the module or class you are actually testing.
 - Reaching for `mock.module()` when a constructor argument or `spyOn` would do.
+- A spy on a process boundary left calling through, so the test still hits the real network, clock, or filesystem.
 - Leaving a spy or fake timer installed after the test that set it up.
 
 ## Example
 
 ```ts
-import { describe, test, expect, spyOn, afterEach, mock } from "bun:test";
+import { afterEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { fetchLatest } from "./client.ts";
 
 interface Clock {
@@ -36,16 +37,23 @@ afterEach(() => {
 });
 
 describe("fetchLatest", () => {
-  test("stamps the response with the injected clock", () => {
+  test("stamps the response with the injected clock", async () => {
+    spyOn(globalThis, "fetch").mockResolvedValue(Response.json({ id: "a1" }));
     const clock: Clock = { now: () => 1_000 };
-    const result = fetchLatest({ id: "a1" }, clock);
+
+    const result = await fetchLatest({ id: "a1" }, clock);
+
     expect(result.at).toBe(1_000);
   });
 
-  test("reads the response body once", () => {
-    const read = spyOn(globalThis, "fetch");
-    fetchLatest({ id: "a1" }, { now: () => 0 });
-    expect(read).toHaveBeenCalledTimes(1);
+  test("fetches the record exactly once", async () => {
+    const fetchStub = spyOn(globalThis, "fetch").mockResolvedValue(
+      Response.json({ id: "a1" }),
+    );
+
+    await fetchLatest({ id: "a1" }, { now: () => 0 });
+
+    expect(fetchStub).toHaveBeenCalledTimes(1);
   });
 });
 ```

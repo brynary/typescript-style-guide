@@ -75,9 +75,9 @@ Sources: the three research reports in `.ai/research/`. "Consensus" marks option
 | --- | --- | --- | --- | --- |
 | ERR-1* | Error model | (a) exceptions with typed error classes; (b) Result types (neverthrow); (c) hybrid: Result for expected failures, throw for bugs | contested in all reports; owner tooling includes a neverthrow skill, which suggests (b) or (c) | (c) - neverthrow `Result` for expected/recoverable failures; `throw` only for bugs and unrecoverable states |
 | ERR-2* | Validation library | (a) Zod; (b) Valibot; (c) ArkType; (d) none | (a) - ecosystem default per research; (b) if frontend bundle size is critical | (a) |
-| ERR-3 | Date and time | (a) Temporal for new code, `Date` banned; (b) coexistence | (a) for new code, `Date` allowed at library boundaries | (a) for new code; `Date` allowed only at library boundaries |
+| ERR-3 | Date and time | (a) Temporal for new code, `Date` banned; (b) coexistence | (a) for new code, `Date` allowed at library boundaries | (a) for new code, imported from `temporal-polyfill` until Bun ships `Temporal` natively (Bun 1.3 has no runtime `Temporal` and the default TS lib does not type it); `Date` allowed only at library boundaries (amended 2026-07-06) |
 | ERR-4 | Resource cleanup | (a) prefer `using` / `await using` for disposables; (b) `try`/`finally` acceptable | (a) preferred, (b) permitted | (a) preferred, (b) permitted |
-| ERR-5 | Modern stdlib adoption | (a) prefer native `Promise.try`, `Map.getOrInsert`, `RegExp.escape`; (b) allow legacy patterns | (a) | (a) |
+| ERR-5 | Modern stdlib adoption | (a) prefer native `Promise.try`, `Map.getOrInsert`, `RegExp.escape`; (b) allow legacy patterns | (a) | (a), limited to built-ins the default TS lib types; `Map.getOrInsert` (implemented by Bun, not yet in the default lib) stays behind the `get`-check-`set` idiom until the lib includes it (amended 2026-07-06) |
 
 ## Testing
 
