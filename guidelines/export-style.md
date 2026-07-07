@@ -2,23 +2,26 @@
 
 ## Rule
 
-Use named exports for everything; add a default export only where a framework mechanically requires one.
+Use named exports, export only symbols another module imports, and add a default export only where a framework mechanically requires one.
 
 ## Why
 
-Named exports are greppable, refactor-safely renamed, and let a bundler tree-shake unused code. Default exports hide the real symbol name and invite inconsistent import names across the codebase.
+Named exports are greppable, refactor-safely renamed, and let a bundler tree-shake unused code. Default exports hide the real symbol name and invite inconsistent import names across the codebase. A minimal export surface keeps the module contract obvious and lets unused-code checks catch dead helpers.
 
 ## Do
 
 - Export every function, value, and type by name.
 - Re-import a symbol under its original name.
 - Give each module a clear, discoverable public surface via its named exports.
+- Keep helpers module-private until another module needs them.
 
 ## Avoid
 
 - `export default` in ordinary application or library modules.
 - `export default { ... }` object bags that group unrelated helpers.
 - Renaming a symbol at the import site to work around a default export.
+- Exporting an internal helper that no other module imports.
+- `export let`; export a `const` value or a function that returns the current value.
 
 ## Example
 

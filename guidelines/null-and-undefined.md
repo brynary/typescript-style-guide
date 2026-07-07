@@ -19,6 +19,7 @@ One absence value avoids ambiguous `null`-vs-`undefined` checks. With `exactOpti
 
 - `foo: T | undefined` for a property that is simply optional.
 - Introducing `null` in internal data structures or return types.
+- Baking `| null` or `| undefined` into a named type alias; declare absence at the use site.
 - Assigning `undefined` to an optional property to mean "present but empty".
 
 ## Example

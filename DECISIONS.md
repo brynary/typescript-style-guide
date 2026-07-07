@@ -19,13 +19,13 @@ Sources: the three research reports in `.ai/research/`. "Consensus" marks option
 
 | ID | Decision | Options | Suggested default | Resolution |
 | --- | --- | --- | --- | --- |
-| CFG-1* | Strictness beyond `strict` | which of `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noPropertyAccessFromIndexSignature`, `noImplicitReturns`, `noImplicitOverride`, `noUnusedLocals`/`Parameters` are mandatory | enable all; `exactOptionalPropertyTypes` and `noUncheckedIndexedAccess` add real friction, so confirm those two explicitly | Enable all, including `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` (confirmed explicitly) |
+| CFG-1* | Strictness beyond `strict` | which of `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noPropertyAccessFromIndexSignature`, `noImplicitReturns`, `noImplicitOverride`, `noUnusedLocals`/`Parameters` are mandatory | enable all; `exactOptionalPropertyTypes` and `noUncheckedIndexedAccess` add real friction, so confirm those two explicitly | Enable all, including `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` (confirmed explicitly); also `noFallthroughCasesInSwitch` plus `allowUnreachableCode` and `allowUnusedLabels` pinned to `false` (amended 2026-07-07) |
 | CFG-2* | `erasableSyntaxOnly` | (a) on globally; (b) off, rely on build-step transpilation | (a) - consensus direction for Bun type-stripping and TS 7; cascades: bans enums, namespaces, parameter properties, legacy decorators | (a) |
 | CFG-3 | `target` and `module` pinning | (a) follow TS 6 floating defaults (`es2025`, `esnext`); (b) pin fixed versions | (a) | (a) |
 | CFG-4 | Type-check gate (Bun and Vite do not type check) | (a) `tsc --noEmit` pre-commit and in CI; (b) CI only; (c) editor diagnostics only | (a) | (a) |
 | CFG-5 | `types` array policy | (a) explicit per package (e.g. `["bun"]`); (b) restore wildcard discovery | (a) - TS 6 default; consensus | (a) |
 | CFG-6* | Biome formatter settings | (a) accept defaults (tabs, double quotes, lineWidth 80); (b) override (spaces/single/100-120 common) | (a) - report recommendation: smallest config surface | (a) |
-| CFG-7* | Opinionated Biome rules to enable (off by default) | choose among `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention`, `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions`, `useConsistentArrayType`, `noExcessiveCognitiveComplexity` | enable the set that mechanically enforces the resolved TYPE/MOD/FUN rows | Enable `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention` (kebab-case), `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions` (interface), `useConsistentArrayType` (shorthand `T[]`), and `noImportCycles` (suspicious group; mechanizes the MOD-6 no-cycle rule); leave `noExcessiveCognitiveComplexity` off (no register row backs it) |
+| CFG-7* | Opinionated Biome rules to enable (off by default) | choose among `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention`, `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions`, `useConsistentArrayType`, `noExcessiveCognitiveComplexity` | enable the set that mechanically enforces the resolved TYPE/MOD/FUN rows | Enable `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention` (kebab-case), `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions` (interface), `useConsistentArrayType` (shorthand `T[]`), and `noImportCycles` (suspicious group; mechanizes the MOD-6 no-cycle rule); leave `noExcessiveCognitiveComplexity` off (no register row backs it); add `useThrowOnlyError` and `useThrowNewError` (style group; mechanize the ERR-1 throw discipline) (amended 2026-07-07) |
 | CFG-8 | Suppression policy | (a) every `biome-ignore` / `@ts-expect-error` carries a written reason; (b) free-form | (a) | (a) |
 | CFG-9 | Bun-first vs Node-portable APIs | (a) prefer Bun APIs (`Bun.file`, `Bun.serve`, Bun Shell); (b) stay Node-portable | (a) - owner rule: prefer Bun | (a) |
 | CFG-10 | Dependency versioning | (a) exact pins plus workspace catalogs for shared versions; (b) caret ranges | (a) | (a) |
@@ -44,6 +44,7 @@ Sources: the three research reports in `.ai/research/`. "Consensus" marks option
 | MOD-5 | Local import extensions | (a) always `.ts` (`allowImportingTsExtensions`); (b) extensionless | contested; Bun docs recommend (a) | (a) |
 | MOD-6* | Barrel files | (a) banned; public surface curated by `package.json` `exports`; (b) package entrypoints only; (c) allowed | (a) - barrels hurt tree-shaking and invite cycles (owner rule: no circular dependencies) | (a) |
 | MOD-7 | Side-effect imports | (a) keep `noUncheckedSideEffectImports` (TS 6 default), declare asset wildcards in a global `.d.ts`; (b) disable the check | (a) | (a) |
+| MOD-8 | Export surface minimalism | (a) export only symbols another module imports, keep helpers module-private, no mutable `export let`; (b) unrestricted exports | (a) - Google ("limit symbol visibility as much as possible") and Microsoft ("do not export unless shared across components") converge; over-exporting defeats dead-code checks | (a) (added 2026-07-07) |
 
 ## Type Modeling
 
@@ -53,7 +54,7 @@ Sources: the three research reports in `.ai/research/`. "Consensus" marks option
 | TYPE-2* | Enum policy | (a) ban `enum` and `const enum`; use `as const` objects or literal unions; (b) string enums only; (c) plain enums allowed | (a) - strong consensus; also cascades from CFG-2 | (a) |
 | TYPE-3* | `any` policy | (a) banned in production code; `unknown` + narrowing at boundaries; (b) warn only | (a) - owner rule; Biome `noExplicitAny` | (a) |
 | TYPE-4* | Assertions and non-null | (a) ban `as` and `!` in production code except `as const`; prefer `satisfies`; (b) allowed at validated boundaries | (a) - owner rule; Biome `noNonNullAssertion` | (a) |
-| TYPE-5* | Absence model | (a) `undefined`-first; optional properties over `\| undefined`; `null` only at external boundaries; (b) mixed by context | (a) - TS-idiomatic; interacts with `exactOptionalPropertyTypes` (CFG-1) | (a) |
+| TYPE-5* | Absence model | (a) `undefined`-first; optional properties over `\| undefined`; `null` only at external boundaries; (b) mixed by context | (a) - TS-idiomatic; interacts with `exactOptionalPropertyTypes` (CFG-1) | (a); named type aliases must not bake in `\| null` or `\| undefined` - declare absence at the use site (amended 2026-07-07) |
 | TYPE-6 | Immutability defaults | (a) `readonly` by default for DTOs, props, and public return types; (b) opt-in `readonly` | (a), weakly held | (a) |
 | TYPE-7 | Discriminant field name | (a) `type`; (b) `kind`; (c) `_tag` | (a) most common; if a Result library is adopted (ERR-1), follow its convention | (a) for our own unions; neverthrow's own conventions apply to Result values |
 | TYPE-8 | Type-level complexity ceiling | (a) conservative in app code; mapped/conditional/template-literal types only behind named exported aliases in library code; (b) unrestricted | (a) - explicitness over cleverness for agent-maintained code | (a) |
@@ -62,7 +63,7 @@ Sources: the three research reports in `.ai/research/`. "Consensus" marks option
 
 | ID | Decision | Options | Suggested default | Resolution |
 | --- | --- | --- | --- | --- |
-| FUN-1 | Naming scheme | (a) Google baseline: `lowerCamelCase` values/functions, `UpperCamelCase` types, no `I` prefix, `CONSTANT_CASE` module constants; (b) custom scheme | (a) - consensus | (a) |
+| FUN-1 | Naming scheme | (a) Google baseline: `lowerCamelCase` values/functions, `UpperCamelCase` types, no `I` prefix, `CONSTANT_CASE` module constants; (b) custom scheme | (a) - consensus | (a); acronyms cased as words (`HttpClient`, `parseUrl`, never `HTTPClient`) and no unclear abbreviations (amended 2026-07-07) |
 | FUN-2 | Function form | (a) `function` declarations top-level, arrows for callbacks; (b) arrow consts everywhere | (a) - greppability and hoisting; genuinely contested | (a) - owner choice |
 | FUN-3* | Explicit return types | (a) required on exported functions; (b) required on all functions; (c) inferred everywhere | (a) | (a) |
 | FUN-4 | Class policy | (a) function-first; classes for stateful abstractions and framework contracts; (b) class-friendly | (a) | (a) |
@@ -73,11 +74,12 @@ Sources: the three research reports in `.ai/research/`. "Consensus" marks option
 
 | ID | Decision | Options | Suggested default | Resolution |
 | --- | --- | --- | --- | --- |
-| ERR-1* | Error model | (a) exceptions with typed error classes; (b) Result types (neverthrow); (c) hybrid: Result for expected failures, throw for bugs | contested in all reports; owner tooling includes a neverthrow skill, which suggests (b) or (c) | (c) - neverthrow `Result` for expected/recoverable failures; `throw` only for bugs and unrecoverable states |
+| ERR-1* | Error model | (a) exceptions with typed error classes; (b) Result types (neverthrow); (c) hybrid: Result for expected failures, throw for bugs | contested in all reports; owner tooling includes a neverthrow skill, which suggests (b) or (c) | (c) - neverthrow `Result` for expected/recoverable failures; `throw` only for bugs and unrecoverable states; anything thrown is `new Error()` or an `Error` subclass, never a string or other value (amended 2026-07-07) |
 | ERR-2* | Validation library | (a) Zod; (b) Valibot; (c) ArkType; (d) none | (a) - ecosystem default per research; (b) if frontend bundle size is critical | (a) |
 | ERR-3 | Date and time | (a) Temporal for new code, `Date` banned; (b) coexistence | (a) for new code, `Date` allowed at library boundaries | (a) for new code, imported from `temporal-polyfill` until Bun ships `Temporal` natively (Bun 1.3 has no runtime `Temporal` and the default TS lib does not type it); `Date` allowed only at library boundaries (amended 2026-07-06) |
 | ERR-4 | Resource cleanup | (a) prefer `using` / `await using` for disposables; (b) `try`/`finally` acceptable | (a) preferred, (b) permitted | (a) preferred, (b) permitted |
 | ERR-5 | Modern stdlib adoption | (a) prefer native `Promise.try`, `Map.getOrInsert`, `RegExp.escape`; (b) allow legacy patterns | (a) | (a), limited to built-ins the default TS lib types; `Map.getOrInsert` (implemented by Bun, not yet in the default lib) stays behind the `get`-check-`set` idiom until the lib includes it (amended 2026-07-06) |
+| ERR-6 | Types for external contracts | (a) generate types from machine-readable contracts (OpenAPI, GraphQL); Zod schemas with `z.infer` are the source of truth elsewhere; (b) hand-maintain external types | (a) - mkosir recommendation; pairs with ERR-2 | (a); codegen tool choice stays per-project (added 2026-07-07) |
 
 ## Testing
 

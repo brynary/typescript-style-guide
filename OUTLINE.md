@@ -68,8 +68,8 @@ Numbered topics grouped into sections. Decision references point at [DECISIONS.m
    - `import type` style under `verbatimModuleSyntax`; `node:` protocol; import ordering is Biome-owned.
    - Decisions: MOD-2.
 10. **Export style**
-    - Named exports; the narrow cases where defaults are tolerated.
-    - Decisions: MOD-3.
+    - Named exports; minimal export surface; the narrow cases where defaults are tolerated.
+    - Decisions: MOD-3, MOD-8.
 11. **Import paths and extensions**
     - Relative vs `#` subpath imports vs `tsconfig` `paths`; local import extension style; import attributes (`with`) for JSON/asset loaders.
     - Decisions: MOD-4, MOD-5.
@@ -134,8 +134,8 @@ Numbered topics grouped into sections. Decision references point at [DECISIONS.m
     - Exceptions vs Result types vs hybrid; error taxonomy; `catch (e: unknown)` narrowing.
     - Decisions: ERR-1.
 29. **Runtime validation at boundaries**
-    - Validating external data (API, env, forms); schema-derived types instead of hand-written ones.
-    - Decisions: ERR-2.
+    - Validating external data (API, env, forms); schema-derived types instead of hand-written ones; generated types for machine-readable contracts.
+    - Decisions: ERR-2, ERR-6.
 30. **Async patterns and cancellation**
     - `async`/`await` defaults; `Promise.all`/`allSettled`; `AbortSignal`; error propagation ties to the error model.
     - Decisions: applies ERR-1, ERR-5.

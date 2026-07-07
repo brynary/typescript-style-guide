@@ -11,6 +11,7 @@ The type system does not check values that cross a runtime boundary. A schema tu
 ## Do
 
 - Define a Zod schema per external shape and derive the type with `z.infer<typeof Schema>`.
+- Generate types from a machine-readable contract (OpenAPI, GraphQL) when one exists instead of hand-writing them; the codegen tool stays per-project.
 - Parse at the boundary: `parse` when a failure is an unrecoverable startup error, `safeParse` when the caller can recover.
 - Accept the input as `unknown` and let the schema narrow it.
 - Turn a recoverable `safeParse` failure into a `Result` per [error-handling.md](error-handling.md).

@@ -11,7 +11,7 @@ TypeScript 6 is strict by default but leaves the sharper add-ons off; turning th
 ## Do
 
 - Copy the canonical config below verbatim into a new project's root `tsconfig.json`.
-- Enable every add-on: `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noPropertyAccessFromIndexSignature`, `noImplicitReturns`, `noImplicitOverride`, `noUnusedLocals`, `noUnusedParameters`.
+- Enable every add-on: `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noPropertyAccessFromIndexSignature`, `noImplicitReturns`, `noImplicitOverride`, `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`; pin `allowUnreachableCode` and `allowUnusedLabels` to `false`.
 - Keep `erasableSyntaxOnly: true`; this bans enums, namespaces, and constructor parameter properties across the project.
 - Set `noEmit: true`; Bun executes source, so `tsc` only type-checks (see [type-check-workflow](type-check-workflow.md)).
 - Write TS 7-forward: omit deprecated options and any flag TS 7 removes.
@@ -57,6 +57,9 @@ TypeScript 6 is strict by default but leaves the sharper add-ons off; turning th
     "noImplicitOverride": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
 
     "skipLibCheck": true
   }

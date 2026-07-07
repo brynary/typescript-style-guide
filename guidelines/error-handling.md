@@ -20,6 +20,7 @@ Expected failures (validation, I/O, domain rules) belong in the type signature s
 ## Avoid
 
 - `throw` for outcomes a caller can reasonably recover from.
+- Throwing a string, object literal, or anything that is not `new Error()` or an `Error` subclass; only `Error`s carry stack traces.
 - `catch (error)` without an explicit `unknown` annotation and narrowing.
 - Swallowing a `Result` by ignoring the `err` branch.
 

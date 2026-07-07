@@ -15,6 +15,7 @@ Declare bindings with `const` first (`let` only when reassigned, never `var`), a
 - Name types, interfaces, classes, and enums-replacements in `UpperCamelCase`.
 - Name module-level constants (fixed, primitive, top-level) in `CONSTANT_CASE`.
 - Give booleans a predicate name (`isReady`, `hasItems`).
+- Case acronyms as words (`HttpClient`, `parseUrl`, `userId`), never as all-caps runs (`HTTPClient`, `parseURL`).
 - File naming is owned by [project-layout.md](project-layout.md).
 
 ## Avoid
@@ -23,6 +24,7 @@ Declare bindings with `const` first (`let` only when reassigned, never `var`), a
 - `let` for a binding you never reassign.
 - An `I` prefix on interfaces or a `T` prefix on types.
 - Hungarian notation or type suffixes (`userStr`, `countNum`).
+- Abbreviations that are not widely accepted (`usrCfg`, `resp`); write the whole word.
 - `CONSTANT_CASE` for local bindings or object properties.
 
 ## Example

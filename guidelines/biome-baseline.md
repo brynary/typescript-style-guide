@@ -13,7 +13,7 @@ Biome owns everything a tool can decide so prose does not have to: formatting an
 - Copy the canonical `biome.json` below and keep `recommended: true`.
 - Install Biome 2.2 or newer and keep the `$schema` version in sync with the installed version; before 2.2, `useConsistentTypeDefinitions` and `noImportCycles` were nursery rules and this config fails to load.
 - Accept the formatter defaults unchanged: tabs, double quotes, line width 80.
-- Enable the opinionated rules that back register decisions: `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention` (kebab-case), `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions` (interface), `useConsistentArrayType` (shorthand `T[]`), `noImportCycles`.
+- Enable the opinionated rules that back register decisions: `noEnum`, `noNonNullAssertion`, `noParameterAssign`, `useNamingConvention`, `useFilenamingConvention` (kebab-case), `noBarrelFile`, `noReExportAll`, `useConsistentTypeDefinitions` (interface), `useConsistentArrayType` (shorthand `T[]`), `noImportCycles`, `useThrowOnlyError`, `useThrowNewError`.
 - Run Biome in the same pre-commit and CI gates as the type check.
 
 ## Avoid
@@ -41,6 +41,8 @@ Biome owns everything a tool can decide so prose does not have to: formatting an
         "noNonNullAssertion": "error",
         "noParameterAssign": "error",
         "useNamingConvention": "error",
+        "useThrowOnlyError": "error",
+        "useThrowNewError": "error",
         "useConsistentTypeDefinitions": {
           "level": "error",
           "options": { "style": "interface" }
