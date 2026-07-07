@@ -26,7 +26,7 @@ A plain function with an explicit props interface is greppable, infers cleanly, 
 
 - `React.FC`, `React.FunctionComponent`, or `forwardRef`.
 - Inline object-literal prop types; declare a named `XxxProps` interface instead.
-- Prescribing a state or data-fetching library here; both stay per-project.
+- Fetching data or wiring shared state in the component body; use the SWR query hooks and state conventions in [react-hooks-and-context.md](react-hooks-and-context.md).
 - CSS-in-JS or ad hoc stylesheets in place of Tailwind classes.
 
 ## Example

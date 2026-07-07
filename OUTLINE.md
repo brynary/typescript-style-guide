@@ -166,7 +166,7 @@ Numbered topics grouped into sections. Decision references point at [DECISIONS.m
 
 ### Conditional Overlays (pending SCOPE-3)
 
-- **React and TSX** (1-3 pages): component and props typing, hooks, ref-as-prop, context, state and data-fetching standards. Decisions: REACT-1, REACT-2.
+- **React and TSX** (1-3 pages): component and props typing, hooks, ref-as-prop, context, no direct `useEffect`, SWR data fetching, Zustand for deeply shared state. Decisions: REACT-1, REACT-2, REACT-3.
 - **CLI scripts**: Bun Shell, arg parsing, exit codes, stdout/stderr discipline.
 - **Monorepo and workspaces**: workspace protocol, catalogs, per-package tsconfig and Biome nesting, project references.
 - **Package publishing**: `exports` maps, `.d.ts` authoring, public type surface design.
