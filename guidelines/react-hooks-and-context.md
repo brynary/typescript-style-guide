@@ -4,7 +4,7 @@ Hooks, effects, context, and shared state in React 19 without `as` or non-null a
 
 ## Activation
 
-Load when writing React hooks, custom hooks, effects, or context providers in `.tsx`/`.ts` files. Skip for non-React code.
+Apply when writing React hooks, custom hooks, effects, or context providers in `.tsx`/`.ts` files. Skip for non-React code.
 
 ## Rule
 

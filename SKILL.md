@@ -37,6 +37,7 @@ Apply the loaded policy pages directly.
 - Workflows own multi-step procedures and route to their policy pages.
 - Fast paths load only the directly linked owner pages.
 - Use the guideline index only when no workflow or fast path matches.
-- Load overlays only when their `Activation` section applies.
+- Select overlays using task descriptions in this router, the guideline index, or workflow routing.
+- After loading an overlay, apply it only when its `Activation` section matches.
 - Prefer concrete TypeScript guidance over language tutorials.
 - Ask one focused question only when required project context is missing.

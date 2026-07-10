@@ -15,8 +15,12 @@ No policy page is universal. Load pages only when the diff raises their concern:
 | Errors, async, or cleanup | [error handling](../guidelines/error-handling.md), [async patterns](../guidelines/async-patterns.md), [resource management](../guidelines/resource-management.md) |
 | Tests | [test structure](../guidelines/test-structure.md), [test doubles](../guidelines/test-doubles.md) |
 | Comments or suppressions | [comments and JSDoc](../guidelines/comments-and-jsdoc.md), [suppressions](../guidelines/suppressions.md) |
+| React components or TSX | [React components](../guidelines/react-components.md) |
+| Hooks, effects, or context | [React hooks](../guidelines/react-hooks-and-context.md) |
+| Executable scripts or automation | [CLI scripts](../guidelines/cli-scripts.md) |
+| Workspace or package topology | [monorepo](../guidelines/monorepo.md) |
 
-Load [React components](../guidelines/react-components.md), [React hooks](../guidelines/react-hooks-and-context.md), [CLI scripts](../guidelines/cli-scripts.md), or [monorepo](../guidelines/monorepo.md) only when the overlay's activation matches.
+After loading an overlay, apply it only when its `Activation` section matches.
 
 ## Workflow
 

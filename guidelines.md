@@ -1,6 +1,6 @@
 # Guidelines
 
-Load only the pages whose descriptions match the task. Load an overlay only when its `Activation` section matches the work.
+Use page descriptions to select pages before loading them. After loading an overlay, apply it only when its `Activation` section matches.
 
 ## Foundations and Toolchain
 

@@ -4,7 +4,7 @@ Component and props typing for React 19 with TSX.
 
 ## Activation
 
-Load when writing or editing React components or `.tsx` files. Skip for non-React code.
+Apply when writing or editing React components or `.tsx` files. Skip for non-React code.
 
 ## Rule
 

@@ -4,7 +4,7 @@ Bun workspace layout, shared versions, and per-package configuration.
 
 ## Activation
 
-Load when working in a Bun workspace or adding, linking, or configuring packages in a monorepo. Skip for single-package repos.
+Apply when working in a Bun workspace or adding, linking, or configuring packages in a monorepo. Skip for single-package repos.
 
 ## Rule
 
