@@ -10,8 +10,6 @@ Declarations hoist, read clearly in stack traces, and are easy to grep by name. 
 
 ## Do
 
-- Declare named, top-level, and exported functions with the `function` keyword.
-- Use arrow functions for callbacks passed to `map`, `filter`, event handlers, and other inline positions.
 - Rely on an arrow's lexical `this` inside methods when you need to preserve the enclosing `this`.
 - Keep each function to a single form; do not mix a declaration body with a re-exported arrow alias.
 

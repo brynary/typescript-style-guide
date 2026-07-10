@@ -10,8 +10,6 @@ Explicit return types make a package's public contract stable and reviewable, an
 
 ## Do
 
-- Write the return type on every exported or otherwise public function and method.
-- Let inference handle return types of non-exported, local functions.
 - Prefer a union parameter or an options object over function overloads.
 - Group parameters into a single options object once a function takes more than three, or takes two or more of the same type.
 - Destructure the options object in the parameter list and give optional fields defaults there.

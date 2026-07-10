@@ -54,7 +54,7 @@ export function settle(
   amount: number,
 ): ResultAsync<Account, WithdrawError> {
   return ResultAsync.fromPromise(
-    load(),
+    Promise.try(load),
     (error: unknown): WithdrawError => ({
       type: "unavailable",
       reason: error instanceof Error ? error.message : String(error),

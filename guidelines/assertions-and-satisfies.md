@@ -15,11 +15,6 @@ Never use a type assertion (`as`) or a non-null assertion (`!`) in production co
 - Narrow with a guard or an explicit check to remove `undefined`, not `!`.
 - Use a `const` type parameter (`<const T>`) to infer literal types on inputs.
 
-## Avoid
-
-- `value as SomeType` and double assertions (`value as unknown as T`).
-- `value!.field` to silence a possibly-undefined error.
-
 ## Example
 
 ```ts
@@ -40,7 +35,3 @@ function firstMethod(list: readonly Route[]): string | undefined {
   return head === undefined ? undefined : head.method;
 }
 ```
-
-## Exceptions
-
-`as const` is always allowed. For untrusted input, narrow from `unknown` rather than asserting; see [any-unknown-never](any-unknown-never.md). A genuinely unavoidable assertion requires a justified escape hatch; see [suppressions](suppressions.md).

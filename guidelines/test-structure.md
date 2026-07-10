@@ -41,7 +41,3 @@ describe("cart", () => {
   });
 });
 ```
-
-## Exceptions
-
-None. Test file naming and placement are owned by [project-layout.md](project-layout.md). For mocks and restoring state see [test-doubles.md](test-doubles.md).

@@ -16,7 +16,6 @@ Decorators are non-erasable runtime syntax that the type-stripping baseline in [
 
 ## Avoid
 
-- `@decorator` syntax on classes, methods, fields, or parameters.
 - Reflection-metadata based dependency injection that relies on decorators.
 - Reaching for a library whose primary API is decorator-driven when a function-based alternative exists.
 
@@ -39,7 +38,3 @@ function handleHealth(): Response {
 
 const loggedHealth = withLogging(handleHealth);
 ```
-
-## Exceptions
-
-- If a framework in scope mechanically requires decorators, isolate them to the thin adapter that the framework instantiates and keep all other code decorator-free.

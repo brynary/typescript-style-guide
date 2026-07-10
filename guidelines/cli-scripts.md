@@ -4,7 +4,7 @@ Conventions for Bun-executed command-line scripts and automation.
 
 ## Activation
 
-Load when writing a runnable script, automation task, or CLI entry point. Skip for library or application module code.
+Apply when writing a runnable script, automation task, or CLI entry point. Skip for library or application module code.
 
 ## Rule
 

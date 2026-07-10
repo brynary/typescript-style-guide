@@ -33,13 +33,11 @@ Write ESM only and resolve modules with `module: "preserve"` plus `moduleResolut
 ```
 
 ```ts
-// ESM only: static imports and top-level await
-import { readFile } from "node:fs/promises";
+// ESM only: static imports and named exports
+import { hostname } from "node:os";
 
-const config = await readFile("./config.json", "utf8");
-
-export function parseConfig(text: string): unknown {
-  return JSON.parse(text);
+export function currentHost(): string {
+  return hostname();
 }
 ```
 

@@ -25,6 +25,8 @@ The type system does not check values that cross a runtime boundary. A schema tu
 ## Example
 
 ```ts
+import type { Result } from "neverthrow";
+import { err, ok } from "neverthrow";
 import { z } from "zod";
 
 const EnvSchema = z.object({
@@ -36,6 +38,7 @@ const EnvSchema = z.object({
 type Env = z.infer<typeof EnvSchema>;
 
 export function loadEnv(source: Record<string, string | undefined>): Env {
+  // Startup cannot continue safely with invalid environment configuration.
   return EnvSchema.parse(source);
 }
 
@@ -46,9 +49,16 @@ const UserSchema = z.object({
 
 type User = z.infer<typeof UserSchema>;
 
-export function parseUser(payload: unknown): User | undefined {
+interface InvalidUser {
+  readonly type: "invalid-user";
+  readonly message: string;
+}
+
+export function parseUser(payload: unknown): Result<User, InvalidUser> {
   const result = UserSchema.safeParse(payload);
-  return result.success ? result.data : undefined;
+  return result.success
+    ? ok(result.data)
+    : err({ type: "invalid-user", message: result.error.message });
 }
 ```
 

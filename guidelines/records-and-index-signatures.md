@@ -15,12 +15,6 @@ Use `Record<K, V>` for a fixed or finite set of known keys, an index signature f
 - Narrow an indexed read before using it, since its type includes `undefined`.
 - Use a guarded `get` before writing (`Map.getOrInsert` once the default TS lib types it; see [dates-and-stdlib](dates-and-stdlib.md)).
 
-## Avoid
-
-- An index signature when the keys are actually a known, closed set.
-- Treating `record[key]` as always present; it is `V | undefined`.
-- Using a plain object as a mutable dynamic-key collection where `Map` fits.
-
 ## Example
 
 ```ts
@@ -41,7 +35,3 @@ function touch(id: string): number {
   return next;
 }
 ```
-
-## Exceptions
-
-None. Indexed-access safety comes from `noUncheckedIndexedAccess`; see [tsconfig-baseline](tsconfig-baseline.md).

@@ -2,11 +2,11 @@
 
 ## Rule
 
-Use one canonical strict `tsconfig.json` for TypeScript 6: `strict` plus every strictness add-on, `erasableSyntaxOnly` and `verbatimModuleSyntax` on, and `noEmit` because Bun runs TypeScript directly.
+Use the canonical strict TypeScript 6 baseline: `strict` plus every add-on, `erasableSyntaxOnly` and `verbatimModuleSyntax` on, and `noEmit` because Bun runs TypeScript directly.
 
 ## Why
 
-TypeScript 6 is strict by default but leaves the sharper add-ons off; turning them all on catches real bugs before runtime. `erasableSyntaxOnly` keeps every file runnable by Bun's type-stripping loader, and this file is the single source of truth every later page defers to for compiler mechanics.
+TypeScript 6 leaves useful strictness add-ons off. The shared baseline catches those bugs and keeps source runnable by Bun's type-stripping loader.
 
 ## Do
 
@@ -15,6 +15,7 @@ TypeScript 6 is strict by default but leaves the sharper add-ons off; turning th
 - Keep `erasableSyntaxOnly: true`; this bans enums, namespaces, and constructor parameter properties across the project.
 - Set `noEmit: true`; Bun executes source, so `tsc` only type-checks (see [type-check-workflow](type-check-workflow.md)).
 - Write TS 7-forward: omit deprecated options and any flag TS 7 removes.
+- In a workspace, keep this baseline at the root and extend it from each package tsconfig; package configs own their `types` and environment-specific options (see [monorepo](monorepo.md)).
 
 ## Avoid
 
@@ -24,6 +25,8 @@ TypeScript 6 is strict by default but leaves the sharper add-ons off; turning th
 - Module and resolution settings beyond the canonical values; their policy lives in [module-resolution](module-resolution.md).
 
 ## Example
+
+Single-package Bun project:
 
 ```jsonc
 {

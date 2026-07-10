@@ -24,25 +24,30 @@ Types and clear names already say what the code does, so what-comments are noise
 ## Example
 
 ```ts
+import { ResultAsync } from "neverthrow";
+
 interface RetryOptions {
   readonly attempts: number;
 }
 
+interface RetryError {
+  readonly type: "retry-exhausted";
+  readonly cause: unknown;
+}
+
 /**
  * Retries `run` with exponential backoff.
- * Throws the last error only after `attempts` failures, so callers
- * see the final cause rather than the first.
+ * Returns a retry-exhausted error with the final cause after `attempts` failures.
  */
-export async function withRetry<T>(
+export function withRetry<T>(
   run: () => Promise<T>,
   options: RetryOptions,
-): Promise<T> {
+): ResultAsync<T, RetryError> {
   // The vendor API rejects bursts under 200ms apart, so never retry faster.
   const minDelayMs = 200;
-  return attempt(run, options.attempts, minDelayMs);
+  return ResultAsync.fromPromise(
+    attempt(run, options.attempts, minDelayMs),
+    (cause: unknown): RetryError => ({ type: "retry-exhausted", cause }),
+  );
 }
 ```
-
-## Exceptions
-
-Justified suppression comments (`biome-ignore`, `@ts-expect-error`) must still carry a written reason; those are owned by [suppressions.md](suppressions.md).

@@ -2,7 +2,7 @@
 
 Run this workflow to scaffold a new Bun + TypeScript 6 + Biome project on the guide's baselines.
 
-## Required Guidelines
+## Guideline Routing
 
 - [bun runtime and dependencies](../guidelines/bun-runtime-and-dependencies.md)
 - [tsconfig baseline](../guidelines/tsconfig-baseline.md)
@@ -11,7 +11,6 @@ Run this workflow to scaffold a new Bun + TypeScript 6 + Biome project on the gu
 - [biome baseline](../guidelines/biome-baseline.md)
 - [project layout and file naming](../guidelines/project-layout.md)
 - [type-check workflow](../guidelines/type-check-workflow.md)
-- [suppressions and escape hatches](../guidelines/suppressions.md)
 
 ## Workflow
 
@@ -39,6 +38,7 @@ Run this workflow to scaffold a new Bun + TypeScript 6 + Biome project on the gu
 
    ```sh
    bun pm pkg set type=module
+   bun pm pkg set module=src/main.ts
    bun pm pkg set scripts.typecheck="tsc --noEmit"
    bun pm pkg set scripts.lint="biome check ."
    bun pm pkg set scripts.format="biome format --write ."
@@ -53,12 +53,12 @@ Run this workflow to scaffold a new Bun + TypeScript 6 + Biome project on the gu
 6. Create `biome.json` and paste the canonical config verbatim from
    [biome baseline](../guidelines/biome-baseline.md); do not override its formatter defaults.
 
-7. Create the layer folders and a `src/index.ts` entry, per
+7. Create the layer folders and a `src/main.ts` entry, per
    [project layout](../guidelines/project-layout.md):
 
    ```sh
    mkdir -p src/routes src/services src/models
-   printf 'export function main(): void {}\n' > src/index.ts
+   printf 'export function main(): void {}\n' > src/main.ts
    ```
 
 8. Wire the type check and lint into a version-controlled pre-commit hook, per
@@ -82,10 +82,3 @@ Run this workflow to scaffold a new Bun + TypeScript 6 + Biome project on the gu
 
 10. Commit the scaffold, including `bun.lock`, `bunfig.toml`, `tsconfig.json`,
     `biome.json`, and `.githooks/`.
-
-## Avoid
-
-- Relaxing a copied tsconfig or biome.json flag to make the empty scaffold pass; fix or suppress narrowly ([suppressions](../guidelines/suppressions.md)).
-- Leaving `bunfig.toml` exact pinning off, which lets later `bun add` write caret ranges.
-- Adding `npm`/`yarn`/`pnpm` lockfiles or a second looser tsconfig for the type-check step.
-- Skipping the pre-commit or CI gate because Bun already runs the code; Bun strips types without checking them.

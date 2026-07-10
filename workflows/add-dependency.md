@@ -2,11 +2,12 @@
 
 Run this workflow to vet, pin, and install a third-party dependency with Bun.
 
-## Required Guidelines
+## Guideline Routing
 
 - [bun runtime and dependencies](../guidelines/bun-runtime-and-dependencies.md)
-- [monorepo and workspaces](../guidelines/monorepo.md)
 - [type packages and globals](../guidelines/type-packages.md)
+
+Load [monorepo and workspaces](../guidelines/monorepo.md) only when the target is a workspace.
 
 ## Workflow
 
@@ -18,7 +19,7 @@ Run this workflow to vet, pin, and install a third-party dependency with Bun.
    24 hours ago. Registry inspection is read-only and does not install anything:
 
    ```sh
-   npm view <pkg> time --json
+   bun info <pkg> time --json
    ```
 
    Compare the timestamp for your target version to now. If it is younger than
@@ -63,13 +64,6 @@ Run this workflow to vet, pin, and install a third-party dependency with Bun.
    ```sh
    bun install
    bun run typecheck
+   bun run lint
    bun test
    ```
-
-## Avoid
-
-- Installing a package published less than 24 hours ago.
-- Adding a package to `trustedDependencies` before reading what its install script does.
-- Caret or tilde ranges, or duplicating a shared version literal across packages instead of cataloging it.
-- Using `npm`, `yarn`, or `pnpm` to install, or committing their lockfiles.
-- Re-enabling wildcard `@types` discovery to pick up a package's globals.

@@ -1,39 +1,25 @@
 # TypeScript Style Guide Skill
 
-This repository contains a TypeScript style guide packaged as a skill for AI coding agents. The goal is to give agents concrete, opinionated defaults for writing idiomatic TypeScript in the project owner's preferred style.
+This repository packages the project owner's TypeScript conventions as a skill for AI coding agents. The guide is complete and maintained through the decision register and focused policy pages.
 
-The guide is fully drafted: the decision register in [DECISIONS.md](DECISIONS.md) is resolved and every guideline, overlay, and workflow page exists. Ongoing changes follow the maintenance workflow below.
+## Repository Map
 
-The packaged skill shape is `SKILL.md` as the root router, focused policy pages under `guidelines/`, and procedure pages under `workflows/`. Planning files remain in the repo as source material, but ordinary skill use should load only the router and relevant guidelines or workflows.
+Packaged skill content:
 
-## Start Here
+- [SKILL.md](SKILL.md): task router.
+- [guidelines.md](guidelines.md): on-demand policy index.
+- [guidelines/](guidelines): focused policy pages.
+- [workflows/](workflows): procedures for larger tasks.
 
-- [SKILL.md](SKILL.md): skill entrypoint and root router for progressive disclosure.
-- [guidelines.md](guidelines.md): guideline index for the packaged skill.
-- [guidelines/](guidelines): focused TypeScript style policy pages.
-- [workflows/](workflows): procedural workflows for larger tasks.
-- [OUTLINE.md](OUTLINE.md): the guideline map used to draft the guide.
-- [DECISIONS.md](DECISIONS.md): style decision register.
-- [DRAFTING.md](DRAFTING.md): drafting order, page rules, and scope rules.
-- [TEMPLATE.md](TEMPLATE.md): the required format for each guideline page.
-- [AGENTS.md](AGENTS.md): repository instructions for AI coding agents.
+Maintenance content:
 
-## Research
+- [authoring/DRAFTING.md](authoring/DRAFTING.md): maintenance entrypoint for decisions, ownership, and page shape.
+- [AGENTS.md](AGENTS.md): repository instructions.
+- [.ai/research/](.ai/research): background research, not policy.
 
-Source research reports go in [.ai/research/](.ai/research). They are used to synthesize the outline and decision register. Treat them as background material, not as final policy.
+## Maintenance
 
-## Intended Style
-
-Hard rules for mechanical choices, reasoned defaults for judgment calls. The stack is Bun-first with maximum-strictness TypeScript 6 (written TS 7-forward), Biome with default formatting, ESM with named exports and no barrels, `interface` for object shapes, an undefined-first absence model, no `any`/`as`/`!`, neverthrow Results for expected failures, Zod at boundaries, and minimal-mock bun:test testing. The full posture lives in the `Style Guide Bias` section of [AGENTS.md](AGENTS.md).
-
-## Workflow
-
-1. Update [DECISIONS.md](DECISIONS.md) when policy changes.
-2. Update the relevant page under [guidelines/](guidelines) or [workflows/](workflows).
-3. Keep [guidelines.md](guidelines.md) linked to every packaged guideline page.
-4. Keep [SKILL.md](SKILL.md) small and route through progressive disclosure.
-5. Run `bash checks/check.sh` before committing skill changes.
-6. Use [DRAFTING.md](DRAFTING.md) and [TEMPLATE.md](TEMPLATE.md) only when adding or reshaping pages.
+Start with [authoring/DRAFTING.md](authoring/DRAFTING.md). It routes to the decision register, ownership map, and page template. Run `bash checks/check.sh` before committing skill changes.
 
 ## mdBook
 
@@ -44,16 +30,6 @@ mdbook build
 mdbook serve --open
 ```
 
-Book source lives under [src/](src). The book source uses symlinks to expose packaged skill files without duplicating the canonical copies at the repository root, and a preprocessor strips SKILL.md's frontmatter from the rendered book.
+Book source lives under [src/](src). Symlinks expose the canonical packaged files, and a preprocessor strips `SKILL.md` frontmatter from the rendered book.
 
-GitHub Pages deployment is handled by [.github/workflows/deploy.yml](.github/workflows/deploy.yml). For first-time setup, set the repository's Pages source to "GitHub Actions" under Settings > Pages. Pushes to `main` will build the book and deploy the generated `book/` output.
-
-## Packaging Model
-
-The skill uses progressive disclosure:
-
-- `SKILL.md` stays small and routes tasks to relevant guidelines and workflows.
-- `guidelines.md` indexes the available guideline pages.
-- Focused policy pages live under `guidelines/`.
-- Procedural pages live under `workflows/`.
-- Planning files like `README.md`, `OUTLINE.md`, `DRAFTING.md`, `DECISIONS.md`, and `.ai/research/` stay outside the packaged skill unless explicitly needed.
+GitHub Pages deployment is handled by [.github/workflows/deploy.yml](.github/workflows/deploy.yml). Set the Pages source to "GitHub Actions" once; pushes to `main` deploy the generated book.

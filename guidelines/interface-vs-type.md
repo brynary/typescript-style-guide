@@ -10,14 +10,7 @@ One consistent choice removes a per-declaration decision. `interface` gives bett
 
 ## Do
 
-- Declare object and class-implementable shapes with `interface`.
-- Use `type` for unions, tuples, function types, and aliases (`type Id = string`).
 - Extend object shapes with `interface B extends A`.
-
-## Avoid
-
-- Aliasing an object shape with `type` when `interface` fits.
-- Mixing both styles for object shapes in the same package.
 
 ## Example
 
@@ -44,7 +37,3 @@ interface Square {
   readonly side: number;
 }
 ```
-
-## Exceptions
-
-None. This is enforced mechanically by Biome `useConsistentTypeDefinitions`; see [biome-baseline](biome-baseline.md).

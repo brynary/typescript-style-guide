@@ -2,38 +2,44 @@
 
 ## Rule
 
-Type checking is a separate step: run `tsc --noEmit` against the root `tsconfig.json` in a pre-commit hook and in CI, because Bun and Vite strip types without checking them.
+Run one root `typecheck` script in a pre-commit hook and CI: use `tsc --noEmit` in a single package, and have a workspace root orchestrate that script in every package.
 
 ## Why
 
-Bun's loader and Vite transpile by erasing type annotations for speed; neither reports type errors. Nothing verifies types unless `tsc` runs explicitly, so an unchecked repo can ship code that never type-checked.
+Bun and Vite erase types without checking them. The root script is the authoritative gate even when it delegates to package tsconfigs.
 
 ## Do
 
-- Expose a `typecheck` script that runs `tsc --noEmit` and treat it as the authoritative gate.
-- Run it in a pre-commit (or pre-push) hook so errors are caught before code leaves a machine.
-- Run the same script in CI as a required check.
-- Treat the root `tsconfig.json` (see [tsconfig-baseline](tsconfig-baseline.md)) as authoritative; run against it, not an editor-only config.
+- Give each checked package a `typecheck` script that runs `tsc --noEmit` against its extending tsconfig.
+- In a single package, expose that script at the root.
+- In a workspace, expose a root script that runs every package's script (see [monorepo](monorepo.md)).
+- Run the root script in a pre-commit or pre-push hook and as a required CI check.
 
 ## Avoid
 
 - Relying on editor diagnostics or `bun run` alone to catch type errors.
 - Assuming a green `bun test` or a successful `vite build` means the code type-checks.
-- Adding a second, looser tsconfig just for the type-check step.
+- Checking only a workspace's root baseline while skipping package tsconfigs.
+- Adding a looser tsconfig just for the gate.
 
 ## Example
 
 ```jsonc
+// Single-package package.json
 {
   "scripts": {
-    // Authoritative type-check gate; runs in pre-commit and CI
     "typecheck": "tsc --noEmit"
   }
 }
 ```
 
-Wire the same script into both gates: a pre-commit hook runs `bun run typecheck`, and the CI workflow runs `bun run typecheck` as a required job.
+```jsonc
+// Workspace root package.json; each package defines "typecheck": "tsc --noEmit"
+{
+  "scripts": {
+    "typecheck": "bun run --workspaces typecheck"
+  }
+}
+```
 
-## Exceptions
-
-- None. Type checking always runs against the root config in both gates.
+Both hooks and CI run `bun run typecheck` from the repository root.
