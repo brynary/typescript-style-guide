@@ -1,6 +1,6 @@
 # Guidelines
 
-Use this index to load only the policy pages needed for the task. Load an overlay page only when its `Activation` section matches the work.
+Load only the pages whose descriptions match the task. Load an overlay only when its `Activation` section matches the work.
 
 ## Foundations and Toolchain
 

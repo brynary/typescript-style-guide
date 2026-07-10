@@ -5,23 +5,38 @@ description: Apply the project's TypeScript conventions when writing, reviewing,
 
 # TypeScript Style Guide
 
-Apply the loaded policy pages directly; do not treat this router as the guide itself.
+Apply the loaded policy pages directly.
 
-## Routing Examples
+## Routing
+
+### Workflows
 
 | Task | Load |
 | --- | --- |
-| Write or refactor TypeScript code | [guidelines.md](guidelines.md), then matching pages |
-| Create or edit tsconfig.json / biome.json | [guidelines.md](guidelines.md), then the config baselines |
-| Start a new project or package | [workflows/setup-project.md](workflows/setup-project.md) |
-| Review a TypeScript diff or PR | [workflows/review-typescript.md](workflows/review-typescript.md) |
-| Add or update a dependency | [workflows/add-dependency.md](workflows/add-dependency.md) |
-| Modernize legacy TypeScript | [workflows/migrate-legacy.md](workflows/migrate-legacy.md) |
-| React, CLI, or monorepo work | [guidelines.md](guidelines.md), then matching overlays |
+| Start a new project or package | [setup workflow](workflows/setup-project.md) |
+| Review TypeScript changes | [review workflow](workflows/review-typescript.md) |
+| Add or update a dependency | [dependency workflow](workflows/add-dependency.md) |
+| Modernize legacy TypeScript | [migration workflow](workflows/migrate-legacy.md) |
+
+### Policy Fast Paths
+
+| Task | Load |
+| --- | --- |
+| Configure TypeScript or Biome | [tsconfig](guidelines/tsconfig-baseline.md), [type checking](guidelines/type-check-workflow.md), [Biome](guidelines/biome-baseline.md) |
+| Change modules, imports, or exports | [module resolution](guidelines/module-resolution.md), [type imports](guidelines/type-imports.md), [exports](guidelines/export-style.md), [import paths](guidelines/import-paths.md), [barrels](guidelines/barrel-files.md) |
+| Model domain or boundary data | [interface vs type](guidelines/interface-vs-type.md), [discriminated unions](guidelines/discriminated-unions.md), [immutability](guidelines/readonly-and-immutability.md), [runtime validation](guidelines/runtime-validation.md) |
+| Handle expected failure or async work | [error handling](guidelines/error-handling.md), [runtime validation](guidelines/runtime-validation.md), [async patterns](guidelines/async-patterns.md), [resource management](guidelines/resource-management.md) |
+| Write tests | [test structure](guidelines/test-structure.md), [test doubles](guidelines/test-doubles.md), [type-level tests](guidelines/type-level-tests.md) |
+| Write React or TSX | [React components](guidelines/react-components.md), [hooks and context](guidelines/react-hooks-and-context.md) |
+| Write a CLI | [CLI overlay](guidelines/cli-scripts.md) |
+| Work in a monorepo | [monorepo overlay](guidelines/monorepo.md) |
+| Other TypeScript policy work | [guideline index](guidelines.md) |
 
 ## Core Behavior
 
-- Load only the pages the task needs; guideline pages are the policy, workflow pages are the procedures.
-- Overlay pages (React, CLI, monorepo) declare when they apply in their `Activation` section; skip them otherwise.
+- Workflows own multi-step procedures and route to their policy pages.
+- Fast paths load only the directly linked owner pages.
+- Use the guideline index only when no workflow or fast path matches.
+- Load overlays only when their `Activation` section applies.
 - Prefer concrete TypeScript guidance over language tutorials.
-- Apply the loaded rules directly. Ask one focused question only when required project context is missing.
+- Ask one focused question only when required project context is missing.

@@ -2,7 +2,7 @@
 
 Run this workflow to bring an existing TypeScript package up to the guide's baselines.
 
-## Required Guidelines
+## Guideline Routing
 
 - [tsconfig baseline](../guidelines/tsconfig-baseline.md)
 - [biome baseline](../guidelines/biome-baseline.md)

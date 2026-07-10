@@ -2,7 +2,7 @@
 
 Run this workflow to scaffold a new Bun + TypeScript 6 + Biome project on the guide's baselines.
 
-## Required Guidelines
+## Guideline Routing
 
 - [bun runtime and dependencies](../guidelines/bun-runtime-and-dependencies.md)
 - [tsconfig baseline](../guidelines/tsconfig-baseline.md)

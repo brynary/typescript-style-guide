@@ -2,7 +2,7 @@
 
 Run this workflow to vet, pin, and install a third-party dependency with Bun.
 
-## Required Guidelines
+## Guideline Routing
 
 - [bun runtime and dependencies](../guidelines/bun-runtime-and-dependencies.md)
 - [type packages and globals](../guidelines/type-packages.md)

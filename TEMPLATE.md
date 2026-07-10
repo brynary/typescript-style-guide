@@ -1,6 +1,6 @@
 # Guideline Page Template
 
-Every guideline page needs a direct `Rule`. Add other sections only when they contribute information the rule does not already contain.
+Every guideline page needs a direct `Rule` and must stay at or below 100 lines. Add other sections only when they contribute information the rule does not already contain.
 
 ```markdown
 # Guideline Name

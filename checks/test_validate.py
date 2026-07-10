@@ -40,6 +40,10 @@ const answer = 42;
 WORKFLOW = """
 # Workflow
 
+## Guideline Routing
+
+Load [topic](../guidelines/topic.md).
+
 ## Workflow
 
 1. Do the work.
@@ -53,7 +57,7 @@ name: example
 
 # Skill
 
-## Routing Examples
+## Routing
 
 | Task | Load |
 | --- | --- |
@@ -125,6 +129,54 @@ class ValidateTests(unittest.TestCase):
             result = validate.validate(root)
 
         self.assertTrue(any("missing ## Activation" in error for error in result.errors))
+
+    def test_rejects_duplicate_routing_and_workflows_in_index(self):
+        validate = load_validate()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            write(
+                root / "SKILL.md",
+                SKILL.replace(
+                    "| Workflow | [Workflow](workflows/workflow.md) |",
+                    "| Workflow | [Workflow](workflows/workflow.md), [again](workflows/workflow.md) |",
+                ),
+            )
+            write(
+                root / "guidelines.md",
+                "[Topic](guidelines/topic.md)\n[Again](guidelines/topic.md)\n"
+                "[Workflow](workflows/workflow.md)",
+            )
+            write(root / "guidelines" / "topic.md", GUIDELINE)
+            write(root / "workflows" / "workflow.md", WORKFLOW)
+
+            result = validate.validate(root)
+
+        self.assertTrue(any("guidelines.md lists guidelines/topic.md more than once" in error for error in result.errors))
+        self.assertTrue(any("guidelines.md must not link workflow" in error for error in result.errors))
+        self.assertTrue(any("SKILL.md links workflows/workflow.md more than once" in error for error in result.errors))
+
+    def test_rejects_oversized_guideline_but_allows_long_workflow(self):
+        validate = load_validate()
+        oversized = GUIDELINE + "\n" + "\n".join(
+            f"Additional guideline line {index}." for index in range(101)
+        )
+        long_workflow = WORKFLOW + "\n" + "\n".join(
+            f"Additional workflow line {index}." for index in range(150)
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            write(root / "SKILL.md", SKILL)
+            write(root / "guidelines.md", "[Topic](guidelines/topic.md)")
+            write(root / "guidelines" / "topic.md", oversized)
+            write(root / "workflows" / "workflow.md", long_workflow)
+
+            result = validate.validate(root)
+
+        size_errors = [error for error in result.errors if "line limit" in error]
+        self.assertEqual(1, len(size_errors))
+        self.assertIn("guidelines/topic.md", size_errors[0])
 
 
 if __name__ == "__main__":

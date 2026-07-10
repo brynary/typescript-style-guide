@@ -14,19 +14,28 @@ Use these instructions when changing the completed style guide.
 
 - Use [TEMPLATE.md](TEMPLATE.md); only `Rule` is universal, and overlays also require `Activation`.
 - Give every rule one owner page. Sibling pages may use one linked reminder when needed.
+- Keep guideline pages at or below 100 lines.
 - Make the rule direct and mechanical enough for an agent to apply.
 - Add rationale, bullets, examples, or exceptions only when they add information.
 - Keep rationale practical and examples small.
 - Make incidental code follow the entire guide, especially its error and absence models.
 - Put unresolved policy in `Decision Points` and [DECISIONS.md](DECISIONS.md), not in ordinary prose.
 
-## Progressive Disclosure
+## Routing Contract
 
-- Keep [SKILL.md](SKILL.md) as a small task router.
-- Keep [guidelines.md](guidelines.md) as the on-demand policy index.
-- Put policy in `guidelines/` and multi-step procedures in `workflows/`.
-- Link every packaged page directly from a router; avoid deep reference chains.
-- Do not require unrelated pages for a task or duplicate their policy in a workflow.
+- `SKILL.md` owns workflow discovery, direct policy fast paths, and the fallback to `guidelines.md`.
+- `guidelines.md` indexes policy pages only; it never links workflows.
+- Each workflow appears exactly once in `SKILL.md`.
+- Each guideline appears exactly once in `guidelines.md`.
+- Workflow tasks route to the workflow alone; the workflow selects policy pages in `Guideline Routing`.
+- Overlays state when to load and skip them in `Activation`.
+- Avoid deep reference chains, unrelated co-loads, and duplicated workflow policy.
+
+## Workflow Format
+
+- `Guideline Routing` identifies always-loaded and conditional policy pages.
+- `Workflow` contains the procedure.
+- `Avoid` is optional and includes only workflow-specific failure modes.
 
 ## Scope
 
