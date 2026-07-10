@@ -13,19 +13,13 @@ Packaged skill content:
 
 Maintenance content:
 
-- [DECISIONS.md](DECISIONS.md): authoritative policy decisions.
-- [OUTLINE.md](OUTLINE.md): policy ownership and decision references.
-- [DRAFTING.md](DRAFTING.md): maintenance and page-writing rules.
-- [TEMPLATE.md](TEMPLATE.md): guideline page shape.
+- [authoring/DRAFTING.md](authoring/DRAFTING.md): maintenance entrypoint for decisions, ownership, and page shape.
 - [AGENTS.md](AGENTS.md): repository instructions.
 - [.ai/research/](.ai/research): background research, not policy.
 
 ## Maintenance
 
-1. Amend [DECISIONS.md](DECISIONS.md) before changing policy.
-2. Update the owning guideline or workflow and its entry in [OUTLINE.md](OUTLINE.md).
-3. Update derived routing or checks when needed.
-4. Run `bash checks/check.sh`.
+Start with [authoring/DRAFTING.md](authoring/DRAFTING.md). It routes to the decision register, ownership map, and page template. Run `bash checks/check.sh` before committing skill changes.
 
 ## mdBook
 
