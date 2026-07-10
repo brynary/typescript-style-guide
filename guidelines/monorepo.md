@@ -20,6 +20,7 @@ Link internal packages with the `workspace:*` protocol, share dependency version
 - Declare shared third-party versions once in the root `catalog` and reference them with `"catalog:"`.
 - Give each package a tsconfig that extends the root and sets its own explicit `types` array (for example `["bun"]` or `["react"]`).
 - Add a nested `biome.json` per package that extends the root with `"extends": "//"`.
+- Give each package a `typecheck` script and have the root `typecheck` script run it in every workspace (see [type-check-workflow.md](type-check-workflow.md)).
 - Import across packages by their package name; use `#` subpath imports inside a package. See [import-paths.md](import-paths.md).
 
 ## Avoid
@@ -33,6 +34,7 @@ Link internal packages with the `workspace:*` protocol, share dependency version
 ```jsonc
 // root package.json
 {
+  "scripts": { "typecheck": "bun run --workspaces typecheck" },
   "workspaces": ["packages/*"],
   "catalog": { "zod": "4.0.5" }
 }
@@ -41,6 +43,7 @@ Link internal packages with the `workspace:*` protocol, share dependency version
 ```jsonc
 // packages/api/package.json
 {
+  "scripts": { "typecheck": "tsc --noEmit" },
   "dependencies": {
     "@scope/core": "workspace:*",
     "zod": "catalog:"
@@ -62,7 +65,10 @@ import { parseUser } from "@scope/core";
 import { logger } from "#lib/logger.ts";
 
 export function handle(input: unknown): void {
-  logger.info(parseUser(input));
+  parseUser(input).match(
+    (user) => logger.info(user),
+    (error) => logger.error(error),
+  );
 }
 ```
 

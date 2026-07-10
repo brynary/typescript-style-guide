@@ -57,7 +57,7 @@ Run this workflow to bring an existing TypeScript package up to the guide's base
    ([suppressions](../guidelines/suppressions.md)):
 
    ```sh
-   grep -rn "@ts-expect-error\|biome-ignore" src
+   rg -n "@ts-expect-error|biome-ignore" src
    ```
 
 9. For a risky change to a public API, use expand-and-contract: add the new shape
@@ -72,10 +72,3 @@ Run this workflow to bring an existing TypeScript package up to the guide's base
     bun run lint
     bun test
     ```
-
-## Avoid
-
-- Relaxing a baseline flag to make legacy code compile instead of fixing it.
-- Leaving bridge suppressions without a reason or a follow-up, or letting them become permanent.
-- Renaming or removing a public API in place without expand-and-contract.
-- Migrating everything in one commit so a failing gate cannot be traced to a step.

@@ -10,14 +10,12 @@ Use `Temporal`, imported from `temporal-polyfill`, for new date and time code, a
 
 ## Do
 
-- Model instants, dates, and durations with `Temporal`; keep values immutable.
 - Import it explicitly with `import { Temporal } from "temporal-polyfill"`; drop the import once Bun ships `Temporal` natively.
 - Group with `Object.groupBy` and escape user input with `RegExp.escape`.
 - Convert a boundary `Date` into `Temporal` immediately on the way in.
 
 ## Avoid
 
-- `Date` arithmetic or mutation in new code.
 - Referring to `Temporal` as a global or through ambient declarations; Bun does not provide it yet.
 - A utility dependency (or a hand-rolled loop) for what a built-in already does.
 

@@ -24,15 +24,26 @@ A suppression removes a guardrail, so the reason must be visible at the point of
 ## Example
 
 ```ts
+import { ResultAsync } from "neverthrow";
+
 // Interop boundary: the vendor package ships no type declarations.
 // @ts-expect-error legacy-sdk is an untyped JavaScript package
 import { legacyClient } from "legacy-sdk";
 
-export function fetchRawRecord(id: string): Promise<unknown> {
-	return legacyClient.get(id);
+interface LegacySdkError {
+	readonly type: "legacy-sdk-failed";
+	readonly reason: string;
+}
+
+export function fetchRawRecord(
+	id: string,
+): ResultAsync<unknown, LegacySdkError> {
+	return ResultAsync.fromPromise(
+		Promise.try(() => legacyClient.get(id)),
+		(error: unknown): LegacySdkError => ({
+			type: "legacy-sdk-failed",
+			reason: error instanceof Error ? error.message : String(error),
+		}),
+	);
 }
 ```
-
-## Exceptions
-
-- None. A suppression without a reason is not allowed anywhere.

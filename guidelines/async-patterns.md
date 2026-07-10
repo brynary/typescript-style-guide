@@ -2,19 +2,19 @@
 
 ## Rule
 
-Use `async`/`await` by default, never leave a promise floating, and run independent work concurrently with `Promise.all` or `Promise.allSettled`.
+Use `async`/`await`, run independent work concurrently, and either await each promise or deliberately detach it with `void` after the task handles its own errors.
 
 ## Why
 
-`await` keeps control flow linear and readable. An unawaited promise loses errors and ordering, and serial `await`s waste time when the calls do not depend on each other.
+`await` keeps control flow linear. Concurrency avoids unnecessary serial waits, while explicit detachment makes ownership of a background task visible.
 
 ## Do
 
-- `await` every promise, or explicitly discard it with `void` for deliberate fire-and-forget.
-- Use `Promise.all` when all results are required, `Promise.allSettled` when partial failure is acceptable.
+- Use `Promise.all` for independent tasks whose expected failures are represented by `Result`.
+- Reserve `Promise.allSettled` for top-level best-effort orchestration that must observe every unexpected rejection.
 - Thread an `AbortSignal` through cancellable calls and pass it to `fetch`.
-- Wrap a value that may be sync or async with `Promise.try`.
-- Propagate failures through the error model in [error-handling.md](error-handling.md).
+- Normalize a value that may be sync or async with `Promise.try`, then wrap recoverable failure in `ResultAsync`.
+- Start a detached task with `void` only after it handles its own expected and unexpected failures.
 
 ## Avoid
 
@@ -25,31 +25,36 @@ Use `async`/`await` by default, never leave a promise floating, and run independ
 ## Example
 
 ```ts
+import type { Result } from "neverthrow";
+import { ResultAsync } from "neverthrow";
+
 interface Profile {
   readonly id: string;
   readonly name: string;
 }
 
-export async function fetchAll(
-  urls: readonly string[],
+interface LoadError {
+  readonly type: "load-failed";
+  readonly reason: string;
+}
+
+function toLoadError(error: unknown): LoadError {
+  return {
+    type: "load-failed",
+    reason: error instanceof Error ? error.message : String(error),
+  };
+}
+
+export async function loadAll(
+  loaders: readonly ((signal: AbortSignal) => ResultAsync<Profile, LoadError>)[],
   signal: AbortSignal,
-): Promise<readonly Response[]> {
-  return Promise.all(urls.map((url) => fetch(url, { signal })));
+): Promise<readonly Result<Profile, LoadError>[]> {
+  return Promise.all(loaders.map((load) => load(signal)));
 }
 
-export async function settleAll(
-  loaders: readonly (() => Promise<Profile>)[],
-): Promise<readonly PromiseSettledResult<Profile>[]> {
-  return Promise.allSettled(loaders.map((load) => load()));
-}
-
-export function normalize(
+export function normalizeLoad(
   make: () => Profile | Promise<Profile>,
-): Promise<Profile> {
-  return Promise.try(make);
+): ResultAsync<Profile, LoadError> {
+  return ResultAsync.fromPromise(Promise.try(make), toLoadError);
 }
 ```
-
-## Exceptions
-
-Top-level module code and short scripts may use a self-invoking `async` function; a genuinely detached task may be started with `void` once its own errors are handled internally.

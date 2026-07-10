@@ -10,7 +10,6 @@ Most logic is clearer as functions over plain data. A class earns its place when
 
 ## Do
 
-- Model behavior as functions over data unless the unit genuinely owns state.
 - Mark hidden members with the TypeScript `private` keyword.
 - Declare each field explicitly and assign it in the constructor body.
 - Mark every method that replaces a base method with `override` (enforced by `noImplicitOverride`).
@@ -18,7 +17,6 @@ Most logic is clearer as functions over plain data. A class earns its place when
 
 ## Avoid
 
-- A class that only groups pure functions or holds no state.
 - `#private` fields; use the `private` keyword instead.
 - Constructor parameter properties (`constructor(private x: number)`); they are banned by the erasable-syntax baseline in [tsconfig-baseline.md](tsconfig-baseline.md).
 - Overriding a base method without the `override` keyword.
@@ -55,7 +53,3 @@ class BurstBucket extends TokenBucket {
   }
 }
 ```
-
-## Exceptions
-
-- Implement a class when a framework contract requires one (for example an injectable service or a lifecycle base class).

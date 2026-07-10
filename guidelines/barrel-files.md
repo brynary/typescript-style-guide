@@ -14,19 +14,13 @@ Barrel `index.ts` re-export files defeat tree-shaking, slow resolution, and are 
 - Declare the consumable entry points in `package.json` `exports`.
 - Keep internal modules private by leaving them out of `exports`.
 
-## Avoid
-
-- `index.ts` files whose only job is `export * from "./..."`.
-- Re-exporting a whole module with `export *`.
-- Any import cycle between modules.
-
 ## Example
 
 ```jsonc
 // package.json
 {
   "exports": {
-    ".": "./src/index.ts",
+    ".": "./src/api.ts",
     "./billing": "./src/billing/api.ts"
   }
 }
@@ -42,7 +36,3 @@ export function payAndReceipt(cents: number): string {
   return formatMoney({ amount: cents, currency: "USD" });
 }
 ```
-
-## Exceptions
-
-None. Import cycles are caught mechanically by Biome `noImportCycles`; see [biome-baseline.md](biome-baseline.md). For package-boundary layout in a workspace, see [monorepo.md](monorepo.md).

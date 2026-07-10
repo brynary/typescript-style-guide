@@ -12,7 +12,7 @@ Write components as plain function declarations that take a single typed props p
 
 ## Why
 
-A plain function with an explicit props interface is greppable, infers cleanly, and avoids `React.FC`'s implicit `children` and awkward generics. React 19 removed the need for `forwardRef`, so a `ref` is just another prop.
+A plain function with an explicit props interface keeps the component contract visible and works cleanly with generics. React 19 removed the need for `forwardRef`, so a `ref` is just another prop.
 
 ## Do
 
@@ -55,7 +55,3 @@ export function Button({ label, onClick, ref, children }: ButtonProps): ReactNod
   );
 }
 ```
-
-## Exceptions
-
-A framework that mechanically requires a default export (for example a route or page module) may default-export the component; see [export-style.md](export-style.md). Hooks and context typing live in [react-hooks-and-context.md](react-hooks-and-context.md).

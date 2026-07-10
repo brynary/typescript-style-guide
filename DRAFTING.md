@@ -1,55 +1,36 @@
-# Drafting Instructions
+# Maintenance Instructions
 
-Use these instructions when turning the outline into guideline pages.
+Use these instructions when changing the completed style guide.
 
-## Priorities
+## Policy Changes
 
-1. Resolve the decision register in [DECISIONS.md](DECISIONS.md) before drafting policy pages, flagship decisions first.
-2. Keep [SKILL.md](SKILL.md) small and use it as the router.
-3. Draft the core guideline pages first; define the core set in [OUTLINE.md](OUTLINE.md).
-4. Add workflow pages only where repeated task procedures need more than policy.
-5. Add advanced guideline pages only where the target codebases need them.
-6. Keep every page mechanical enough for an agent to follow.
-
-## Drafting Order
-
-1. Resolve the flagship decision rows (asterisked IDs in [DECISIONS.md](DECISIONS.md)) with the project owner; they gate multiple pages. Record the resulting posture in the AGENTS.md `Style Guide Bias` section.
-2. Section 1 (Foundations and Toolchain), starting with the tsconfig and Biome pages; they are the source of truth every later page defers to for mechanics.
-3. Section 3 (Type Modeling) - contains most flagship pages (interface vs type, enums, any/unknown, assertions, absence model).
-4. Section 2 (Modules, Imports, and Exports).
-5. Section 5 (Errors, Async, and Data) - error model and validation are flagship.
-6. Section 4 (Functions, Classes, and API Design).
-7. Section 6 (Testing) and Section 7 (Documentation).
-8. Workflow pages, once the guideline pages they reference exist.
-9. Conditional overlays (React, CLI, monorepo, publishing) only after SCOPE-3 is resolved.
+1. Add or amend the relevant row in [DECISIONS.md](DECISIONS.md).
+2. Update the one guideline page that owns the rule.
+3. Keep the page's decision references in [OUTLINE.md](OUTLINE.md) current.
+4. Update derived configuration, routing, workflows, or checks only when the rule affects them.
+5. Run `bash checks/check.sh`.
 
 ## Page Rules
 
-- Use [TEMPLATE.md](TEMPLATE.md) for every guideline page.
-- Give every rule exactly one owner page; sibling pages may carry at most a one-line reminder that links to the owner.
-- The review workflow's checklist derives from guideline pages; a policy change that adds or removes a ban must update it in the same change.
-- Make examples demonstrate only the owning page's rules; incidental code in an example follows other pages' rules but does not showcase them.
-- Make the `Rule` section a direct default, not a discussion.
-- Keep `Why` short and practical.
-- Prefer concrete guidance over philosophy.
-- Include exceptions only when an agent could reasonably encounter them.
-- Add a small preferred TypeScript example when the topic affects code shape.
-- Put unresolved choices in `Decision Points` instead of burying them in prose.
+- Use [TEMPLATE.md](TEMPLATE.md); only `Rule` is universal, and overlays also require `Activation`.
+- Give every rule one owner page. Sibling pages may use one linked reminder when needed.
+- Make the rule direct and mechanical enough for an agent to apply.
+- Add rationale, bullets, examples, or exceptions only when they add information.
+- Keep rationale practical and examples small.
+- Make incidental code follow the entire guide, especially its error and absence models.
+- Put unresolved policy in `Decision Points` and [DECISIONS.md](DECISIONS.md), not in ordinary prose.
 
 ## Progressive Disclosure
 
-- Treat [SKILL.md](SKILL.md) as the skill entrypoint and root router, not the guide itself.
-- Keep detailed policy in `guidelines/` pages.
-- Keep procedural task flows in `workflows/` pages.
-- Keep [guidelines.md](guidelines.md) as the one-page guideline index.
-- Link guideline and workflow files directly from [SKILL.md](SKILL.md) or [guidelines.md](guidelines.md); avoid deep reference chains.
-- Do not load every guideline page for ordinary tasks.
-- Use routing examples for common task types so agents know which pages to load.
+- Keep [SKILL.md](SKILL.md) as a small task router.
+- Keep [guidelines.md](guidelines.md) as the on-demand policy index.
+- Put policy in `guidelines/` and multi-step procedures in `workflows/`.
+- Link every packaged page directly from a router; avoid deep reference chains.
+- Do not require unrelated pages for a task or duplicate their policy in a workflow.
 
-## Scope Rules
+## Scope
 
-- Do not re-teach TypeScript syntax or type-system basics unless a style choice depends on them.
-- Do not include long surveys of ecosystem options on guideline pages.
-- Do not add advanced topics unless they affect likely agent output.
-- Add domain-specific scope rules here (audience, strictness splits, runtime assumptions) as the decision register resolves them.
-- Do not package planning files or research reports into the final skill unless the user explicitly asks for them.
+- Give agents conventions, not a TypeScript tutorial or an ecosystem survey.
+- Add a page only when likely agent output needs a distinct owner.
+- Keep planning notes and research outside the packaged skill.
+- Do not edit `.ai/research/` as part of policy maintenance.

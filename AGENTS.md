@@ -12,7 +12,7 @@ Keep the work simple, explicit, and useful for agents. Do not turn the guide int
 
 - [OUTLINE.md](OUTLINE.md): guideline map for the full style guide.
 - [DECISIONS.md](DECISIONS.md): style decision register.
-- [DRAFTING.md](DRAFTING.md): drafting order, scope rules, and page-writing guidance.
+- [DRAFTING.md](DRAFTING.md): maintenance workflow, scope rules, and page-writing guidance.
 - [TEMPLATE.md](TEMPLATE.md): required guideline page format.
 - [SKILL.md](SKILL.md): skill entrypoint and root router.
 - [guidelines.md](guidelines.md): guideline index for progressive disclosure.
@@ -25,7 +25,7 @@ Keep the work simple, explicit, and useful for agents. Do not turn the guide int
 
 - Read [DECISIONS.md](DECISIONS.md) before drafting or changing policy pages; add or amend a register entry before changing policy.
 - Use [TEMPLATE.md](TEMPLATE.md) for every guideline page.
-- Follow [DRAFTING.md](DRAFTING.md) for drafting order, scope, and the one-owner-per-rule principle.
+- Follow [DRAFTING.md](DRAFTING.md) for maintenance scope and the one-owner-per-rule principle.
 - Keep guideline pages short, concrete, and mechanical enough for an agent to follow.
 - Put unresolved choices in `Decision Points` instead of hiding them in prose.
 - Keep [SKILL.md](SKILL.md) small. Put detailed policy in `guidelines/` and procedures in `workflows/`.

@@ -27,8 +27,20 @@ Bun runs TypeScript directly and installs faster with a single committed lockfil
 ## Example
 
 ```ts
-export async function readConfig(path: string): Promise<string> {
-	return Bun.file(path).text();
+import { ResultAsync } from "neverthrow";
+
+interface ConfigReadError {
+	readonly type: "config-read-failed";
+	readonly path: string;
+	readonly reason: string;
+}
+
+export function readConfig(path: string): ResultAsync<string, ConfigReadError> {
+	return ResultAsync.fromPromise(Bun.file(path).text(), (error: unknown) => ({
+		type: "config-read-failed",
+		path,
+		reason: error instanceof Error ? error.message : String(error),
+	}));
 }
 ```
 

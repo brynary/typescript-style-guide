@@ -1,8 +1,6 @@
 # Guidelines
 
-Load this file for TypeScript style policy, then load only the guideline pages needed for the task.
-
-Guideline pages are policy. Do not load every guideline page by default. Overlay pages (React, CLI, monorepo) carry an `Activation` section; load them only when it matches the task.
+Use this index to load only the policy pages needed for the task. Load an overlay page only when its `Activation` section matches the work.
 
 ## Foundations and Toolchain
 

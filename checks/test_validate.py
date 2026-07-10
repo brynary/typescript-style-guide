@@ -28,44 +28,21 @@ GUIDELINE = """
 
 Use the rule.
 
-## Why
-
-Because it matters.
-
-## Do
-
-- Do this.
-
-## Avoid
-
-- Avoid that.
-
 ## Example
 
 ```ts
 const answer = 42;
 ```
 
-## Exceptions
-
-- None.
 """
 
 
 WORKFLOW = """
 # Workflow
 
-## Required Guidelines
-
-Load [guidelines.md](../guidelines.md).
-
 ## Workflow
 
 1. Do the work.
-
-## Avoid
-
-- Avoid shortcuts.
 """
 
 
@@ -75,11 +52,6 @@ name: example
 ---
 
 # Skill
-
-## Supporting Files
-
-- [guidelines.md](guidelines.md)
-- [workflow](workflows/workflow.md)
 
 ## Routing Examples
 
@@ -139,6 +111,20 @@ class ValidateTests(unittest.TestCase):
 
         self.assertEqual(1, result.ts_block_count)
         self.assertTrue(any("empty ts block" in error for error in result.errors))
+
+    def test_overlay_requires_activation(self):
+        validate = load_validate()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            write(root / "SKILL.md", SKILL)
+            write(root / "guidelines.md", "[CLI](guidelines/cli-scripts.md)")
+            write(root / "guidelines" / "cli-scripts.md", GUIDELINE)
+            write(root / "workflows" / "workflow.md", WORKFLOW)
+
+            result = validate.validate(root)
+
+        self.assertTrue(any("missing ## Activation" in error for error in result.errors))
 
 
 if __name__ == "__main__":

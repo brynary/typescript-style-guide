@@ -2,7 +2,7 @@
 
 ## Rule
 
-Use Biome 2.2 or newer as the only formatter and linter with one canonical `biome.json`: accept every formatter default and enable the opinionated rules that mechanically enforce this guide's decisions.
+Use Biome 2.2 or newer as the only formatter and linter, with one canonical root config that package configs may extend: accept formatter defaults and enable the rules that enforce this guide.
 
 ## Why
 

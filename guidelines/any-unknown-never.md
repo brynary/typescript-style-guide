@@ -14,11 +14,8 @@ Never use `any` in production code; type untrusted values as `unknown` and narro
 - Use `never` for unreachable branches and impossible states.
 - Use `object` for "any non-primitive" and `Record<string, unknown>` for open maps.
 - Type a callback as `(...args: readonly unknown[]) => unknown`, not `Function`.
-
-## Avoid
-
-- `any`, `x as any`, and implicit `any` from missing annotations.
-- `Object`, `String`, `Number`, `Boolean`, `Function`, and bare `{}`.
+- Validate external data with Zod where it is in use (see [runtime-validation](runtime-validation.md)).
+- Isolate untyped third-party interop behind a wrapper that exposes `unknown` and carries a justified suppression (see [suppressions](suppressions.md)).
 
 ## Example
 
@@ -36,14 +33,4 @@ function isConfig(value: unknown): value is Config {
   );
 }
 
-function parseConfig(input: unknown): Config {
-  if (!isConfig(input)) {
-    throw new TypeError("invalid config");
-  }
-  return input;
-}
 ```
-
-## Exceptions
-
-Validate external data at boundaries with a schema rather than a hand-written guard where a validation library is in use; see [runtime-validation](runtime-validation.md). `any` is never permitted; suppress only with a justified escape hatch, see [suppressions](suppressions.md).

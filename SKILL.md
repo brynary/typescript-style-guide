@@ -1,31 +1,23 @@
 ---
 name: typescript-style-guide
-description: Apply this TypeScript style guide when writing, reviewing, refactoring, or configuring TypeScript code. Covers Bun-first tooling (tsconfig, Biome, bun:test), modules and imports, type modeling (interface vs type, no enums, no any/as/!), functions and classes, error handling with neverthrow, Zod validation, testing, comments, and React/CLI/monorepo overlays. Also use for setting up a new project, reviewing TypeScript changes, adding a dependency, or migrating legacy code to the guide.
+description: Apply the project's TypeScript conventions when writing, reviewing, refactoring, configuring, or migrating TypeScript. Covers Bun-first tooling, modules, type modeling, API design, neverthrow errors, Zod boundaries, bun:test, and React, CLI, and monorepo overlays. Also use when setting up a project or adding a dependency.
 ---
 
 # TypeScript Style Guide
 
-Use this skill to apply the project's TypeScript style conventions while writing, reviewing, refactoring, or configuring TypeScript code.
-
-## Supporting Files
-
-- [guidelines.md](guidelines.md) - index of TypeScript style policy pages. Load this for ordinary TypeScript work, then load only the guideline pages relevant to the task.
-- [workflows/setup-project.md](workflows/setup-project.md) - scaffold a new Bun + TypeScript + Biome project on the guide's baselines.
-- [workflows/review-typescript.md](workflows/review-typescript.md) - checklist-driven review pass over TypeScript changes.
-- [workflows/add-dependency.md](workflows/add-dependency.md) - vet, pin, and install a dependency safely.
-- [workflows/migrate-legacy.md](workflows/migrate-legacy.md) - bring existing code up to the guide.
+Apply the loaded policy pages directly; do not treat this router as the guide itself.
 
 ## Routing Examples
 
 | Task | Load |
 | --- | --- |
-| Write or refactor TypeScript code | [guidelines.md](guidelines.md), then the matching pages |
-| Create or edit tsconfig.json / biome.json | [guidelines.md](guidelines.md) -> tsconfig and Biome baselines |
+| Write or refactor TypeScript code | [guidelines.md](guidelines.md), then matching pages |
+| Create or edit tsconfig.json / biome.json | [guidelines.md](guidelines.md), then the config baselines |
 | Start a new project or package | [workflows/setup-project.md](workflows/setup-project.md) |
 | Review a TypeScript diff or PR | [workflows/review-typescript.md](workflows/review-typescript.md) |
 | Add or update a dependency | [workflows/add-dependency.md](workflows/add-dependency.md) |
 | Modernize legacy TypeScript | [workflows/migrate-legacy.md](workflows/migrate-legacy.md) |
-| React, CLI, or monorepo work | [guidelines.md](guidelines.md) -> the matching overlay pages |
+| React, CLI, or monorepo work | [guidelines.md](guidelines.md), then matching overlays |
 
 ## Core Behavior
 

@@ -5,7 +5,8 @@ Checks:
 - local Markdown links resolve within the packaged skill files
 - guidelines.md lists every guideline page
 - the SKILL.md router lists every workflow page
-- guideline and workflow pages contain required sections
+- guideline pages contain a Rule and overlays contain Activation
+- workflow pages contain a Workflow section
 - TypeScript code fences are closed and non-empty
 """
 
@@ -15,23 +16,19 @@ import re
 import sys
 
 
-GUIDELINE_SECTIONS = (
-    "## Rule",
-    "## Why",
-    "## Do",
-    "## Avoid",
-    "## Example",
-    "## Exceptions",
-)
+GUIDELINE_SECTIONS = ("## Rule",)
 
-WORKFLOW_SECTIONS = (
-    "## Required Guidelines",
-    "## Workflow",
-    "## Avoid",
-)
+OVERLAY_GUIDELINES = {
+    "cli-scripts.md",
+    "monorepo.md",
+    "react-components.md",
+    "react-hooks-and-context.md",
+}
+
+WORKFLOW_SECTIONS = ("## Workflow",)
 
 ROUTER_SECTIONS = {
-    "SKILL.md": ("## Supporting Files", "## Routing Examples", "## Core Behavior"),
+    "SKILL.md": ("## Routing Examples", "## Core Behavior"),
 }
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
@@ -146,6 +143,8 @@ def validate_guidelines(root, result):
         rel = relative(root, path)
         text = read(path)
         validate_required_sections(root, path, text, GUIDELINE_SECTIONS, result)
+        if path.name in OVERLAY_GUIDELINES:
+            validate_required_sections(root, path, text, ("## Activation",), result)
         if f"]({rel})" not in index:
             result.errors.append(f"guidelines.md does not list {rel}")
 

@@ -35,10 +35,6 @@ function pluck<Item, Key extends keyof Item>(
   return items.map((item) => item[key]);
 }
 
-// Library code: advanced type behind a named exported alias.
-export type Nullable<Value> = Value | undefined;
+// Library code: conditional type behind a named exported alias.
+export type ElementOf<Value> = Value extends readonly (infer Item)[] ? Item : never;
 ```
-
-## Exceptions
-
-Library packages may define mapped, conditional, and template-literal types when they are exported under a documented alias. Application code should consume such aliases, not author new ones inline.

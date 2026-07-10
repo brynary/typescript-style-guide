@@ -10,14 +10,11 @@ A library's exported types are an API contract that inference can silently break
 
 ## Do
 
-- Add type-level tests for exported generics, discriminated unions, overload results, and other inference-sensitive public types of a library.
 - Use `expectTypeOf` from `bun:test` inside a normal `test`, colocated in the package's `*.test.ts` files.
 - Assert the resolved type, not just assignability, when the exact shape is the contract.
 
 ## Avoid
 
-- Type tests for application (non-library) code.
-- Type tests for internal, non-exported types.
 - `as`-based casts to force a type test to pass; assert the real inferred type.
 
 ## Example
@@ -38,7 +35,3 @@ describe("parse public type", () => {
   });
 });
 ```
-
-## Exceptions
-
-None. Runtime test structure is owned by [test-structure.md](test-structure.md).
