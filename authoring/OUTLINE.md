@@ -9,7 +9,7 @@ This map records the owner page for each policy area and the decision rows that 
 | [tsconfig baseline](../guidelines/tsconfig-baseline.md) | CFG-1, CFG-2, CFG-3, SCOPE-4 |
 | [Type-check workflow](../guidelines/type-check-workflow.md) | CFG-4 |
 | [Type packages](../guidelines/type-packages.md) | CFG-5 |
-| [Biome baseline](../guidelines/biome-baseline.md) | CFG-6, CFG-7 |
+| [Biome baseline](../guidelines/biome-baseline.md) | CFG-6, CFG-7, CFG-14, CFG-15, CFG-16 |
 | [Suppressions](../guidelines/suppressions.md) | CFG-8 |
 | [Bun runtime and dependencies](../guidelines/bun-runtime-and-dependencies.md) | CFG-9, CFG-10 |
 | [Project layout](../guidelines/project-layout.md) | CFG-11, CFG-12, CFG-13 |
